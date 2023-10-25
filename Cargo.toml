@@ -1,0 +1,23 @@
+[package]
+name = "glory-shoelace"
+version = "0.0.0"
+authors = ["Chrislearn Young<chrislearn@hotmail.com>"]
+edition = "2021"
+include = ["**/*.rs", "Cargo.toml", "README.md"]
+readme = "README.md"
+repository = "https://github.com/chrislearn/cruet"
+documentation = "https://docs.rs/cruet"
+homepage = "https://github.com/glory-rs/glory-shoelace"
+license = "BSD-2-Clause"
+description = """
+TBD
+"""
+keywords = []
+categories = ["text-processing", "value-formatting"]
+
+[badges]
+
+
+[dependencies]
+regex = { version = "1" }
+once_cell = { version = "1" }
