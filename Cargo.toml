@@ -1,23 +1,34 @@
 [package]
 name = "glory-shoelace"
-version = "0.0.0"
-authors = ["Chrislearn Young<chrislearn@hotmail.com>"]
+version = "0.0.1"
+authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 edition = "2021"
-include = ["**/*.rs", "Cargo.toml", "README.md"]
-readme = "README.md"
-repository = "https://github.com/chrislearn/cruet"
-documentation = "https://docs.rs/cruet"
-homepage = "https://github.com/glory-rs/glory-shoelace"
-license = "MIT"
+rust-version = "1.73"
 description = """
-TBD
+Shoelance for Glory.
 """
-keywords = []
-categories = ["text-processing", "value-formatting"]
+homepage = "https://glory.rs"
+repository = "https://github.com/glory-rs/glory"
+documentation = "https://docs.rs/shoelace/"
+readme = "./README.md"
+keywords = ["http", "async", "web", "framework", "server"]
+license = "MIT OR Apache-2.0"
+categories = ["web-programming::http-server", "web-programming::websocket", "network-programming", "asynchronous"]
 
-[badges]
-
+[features]
+default = ["web-csr"]
+web-csr = ["__single_holder", "dep:wasm-bindgen"]
+web-ssr = []
+__single_holder = []
 
 [dependencies]
-regex = { version = "1" }
-once_cell = { version = "1" }
+cfg-if = "1.0.0"
+educe = "0.4.23"
+js-sys = "0.3.65"
+web-sys = { version = "0.3", features = ["Element", "HtmlElement"] }
+wasm-bindgen = { version = "0.2.88", optional = true }
+glory-core = {version = "0.1.0", path = "../glory/crates/core"}
+
+[package.metadata.cargo-all-features]
+denylist = ["stable"]
+skip_feature_sets = [["web-ssr", "web-csr"]]
