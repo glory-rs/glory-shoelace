@@ -68,6 +68,26 @@ impl Widget for Button {
     }
     fn build(&mut self, ctx: &mut Scope) {
         self.inner.props.insert("variant".into(), Box::new(self.variant.clone()));
+        self.inner.props.insert("size".into(), Box::new(self.size.clone()));
+        self.inner.props.insert("caret".into(), Box::new(self.caret.clone()));
+        self.inner.props.insert("disabled".into(), Box::new(self.disabled.clone()));
+        self.inner.props.insert("loading".into(), Box::new(self.loading.clone()));
+        self.inner.props.insert("outline".into(), Box::new(self.outline.clone()));
+        self.inner.props.insert("pill".into(), Box::new(self.pill.clone()));
+        self.inner.props.insert("circle".into(), Box::new(self.circle.clone()));
+        self.inner.props.insert("type_".into(), Box::new(self.type_.clone()));
+        self.inner.props.insert("name".into(), Box::new(self.name.clone()));
+        self.inner.props.insert("value".into(), Box::new(self.value.clone()));
+        self.inner.props.insert("href".into(), Box::new(self.href.clone()));
+        self.inner.props.insert("target".into(), Box::new(self.target.clone()));
+        self.inner.props.insert("rel".into(), Box::new(self.rel.clone()));
+        self.inner.props.insert("download".into(), Box::new(self.download.clone()));
+        self.inner.props.insert("form".into(), Box::new(self.form.clone()));
+        self.inner.props.insert("form_action".into(), Box::new(self.form_action.clone()));
+        self.inner.props.insert("form_enctype".into(), Box::new(self.form_enctype.clone()));
+        self.inner.props.insert("form_method".into(), Box::new(self.form_method.clone()));
+        self.inner.props.insert("form_validate".into(), Box::new(self.form_validate.clone()));
+        self.inner.props.insert("form_target".into(), Box::new(self.form_target.clone()));
         self.inner.build(ctx);
     }
     fn detach(&mut self, ctx: &mut Scope) {
