@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::fmt;
-use std::ops::{DerefMut, Deref};
+use std::ops::{Deref, DerefMut};
 
 use educe::Educe;
 // #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
@@ -11,13 +11,51 @@ use wasm_bindgen::{JsCast, UnwrapThrowExt};
 use glory_core::reflow::{Bond, Lotus};
 use glory_core::view::{ViewId, ViewPosition};
 use glory_core::web::events::EventDescriptor;
-use glory_core::web::{AttrValue, ClassPart, Classes, PropValue};
+use glory_core::web::{AttrValue, Classes, PropValue};
 use glory_core::{Filler, IntoFiller};
 use glory_core::{NodeRef, Scope, Widget};
+
+// pub enum ButtonVariant {
+//     Default,
+//     Primary,
+//     Success,
+//     Neutral,
+//     Warning,
+//     Danger,
+//     Text,
+// }
+// pub enum ButtonSize {
+//     Small,
+//     Medium,
+//     Large,
+// }
 
 #[derive(Educe)]
 #[educe(Debug)]
 pub struct Button {
+    variant: Lotus<String>,
+    size: Lotus<String>,
+    caret: Lotus<bool>,
+    disabled: Lotus<bool>,
+    loading: Lotus<bool>,
+    outline: Lotus<bool>,
+    pill: Lotus<bool>,
+    circle: Lotus<bool>,
+    type_: Lotus<String>,
+    name: Lotus<String>,
+    value: Lotus<String>,
+    href: Lotus<String>,
+    target: Lotus<String>,
+    rel: Lotus<String>,
+    download: Lotus<Option<String>>,
+    form: Lotus<String>,
+    form_action: Lotus<String>,
+    form_enctype: Lotus<String>,
+    form_method: Lotus<String>,
+    form_validate: Lotus<bool>,
+    form_target: Lotus<String>,
+    // validity: Lotus<String>,
+    // validation_message: Lotus<String>,
     #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
     pub(crate) inner: Element<web_sys::HtmlElement>,
     #[cfg(not(all(target_arch = "wasm32", feature = "web-csr")))]
@@ -29,6 +67,7 @@ impl Widget for Button {
         self.inner.flood(ctx);
     }
     fn build(&mut self, ctx: &mut Scope) {
+        self.inner.props.insert("variant".into(), Box::new(self.variant.clone()));
         self.inner.build(ctx);
     }
     fn detach(&mut self, ctx: &mut Scope) {
@@ -57,129 +96,137 @@ impl DerefMut for Button {
 impl Button {
     pub fn new() -> Self {
         Self {
+            variant: "default".into(),
+            size: "small".into(),
+            caret: false.into(),
+            disabled: false.into(),
+            loading: false.into(),
+            outline: false.into(),
+            pill: false.into(),
+            circle: false.into(),
+            type_: "button".into(),
+            name:"".into(),
+            value:"".into(),
+            href:"".into(),
+            target: "_blank".into(),
+            rel:"".into(),
+            download: None.into(),
+            form:"".into(),
+            form_action:"".into(),
+            form_enctype:"".into(),
+            form_method:"post".into(),
+            form_validate: false.into(),
+            form_target: "_self".into(),
+
             inner: Element::new("sl-button", false),
         }
     }
 
-    pub fn fill(mut self, filler: impl IntoFiller) -> Self {
-        self.inner.fillers.push(filler.into_filler());
+    pub fn variant(mut self, variant: impl Into<Lotus<String>>) -> Self {
+        self.variant = variant.into();
+        self
+    }
+    pub fn size(mut self, size: impl Into<Lotus<String>>) -> Self {
+        self.size = size.into();
         self
     }
 
-    pub fn then<F>(self, func: F) -> Self
-    where
-        F: FnOnce(Self) -> Self,
-    {
-        func(self)
+    pub fn caret(mut self, caret: impl Into<Lotus<bool>>) -> Self {
+        self.caret = caret.into();
+        self
     }
-
-    #[track_caller]
-    pub fn id<V>(mut self, value: V) -> Self
-    where
-        V: AttrValue + 'static,
-    {
-        self.inner.attrs.insert("id".into(), Box::new(value));
+    
+    pub fn disabled(mut self, disabled: impl Into<Lotus<bool>>) -> Self {
+        self.disabled = disabled.into();
+        self
+    }
+    
+    pub fn loading(mut self, loading: impl Into<Lotus<bool>>) -> Self {
+        self.loading = loading.into();
+        self
+    }
+    
+    pub fn outline(mut self, outline: impl Into<Lotus<bool>>) -> Self {
+        self.outline = outline.into();
+        self
+    }
+    
+    pub fn pill(mut self, pill: impl Into<Lotus<bool>>) -> Self {
+        self.pill = pill.into();
+        self
+    }
+    
+    pub fn circle(mut self, circle: impl Into<Lotus<bool>>) -> Self {
+        self.circle = circle.into();
+        self
+    }
+    
+    pub fn type_(mut self, type_: impl Into<Lotus<String>>) -> Self {
+        self.type_ = type_.into();
+        self
+    }
+    
+    pub fn name(mut self, name: impl Into<Lotus<String>>) -> Self {
+        self.name = name.into();
+        self
+    }
+    
+    pub fn value(mut self, value: impl Into<Lotus<String>>) -> Self {
+        self.value = value.into();
+        self
+    }
+    
+    pub fn href(mut self, href: impl Into<Lotus<String>>) -> Self {
+        self.href = href.into();
+        self
+    }
+    
+    pub fn target(mut self, target: impl Into<Lotus<String>>) -> Self {
+        self.target = target.into();
+        self
+    }
+    
+    pub fn rel(mut self, rel: impl Into<Lotus<String>>) -> Self {
+        self.rel = rel.into();
+        self
+    }
+    
+    pub fn download(mut self, download: impl Into<Lotus<Option<String>>>) -> Self {
+        self.download = download.into();
+        self
+    }
+    
+    pub fn form(mut self, form: impl Into<Lotus<String>>) -> Self {
+        self.form = form.into();
+        self
+    }
+    
+    pub fn form_action(mut self, form_action: impl Into<Lotus<String>>) -> Self {
+        self.form_action = form_action.into();
+        self
+    }
+    
+    pub fn form_enctype(mut self, form_enctype: impl Into<Lotus<String>>) -> Self {
+        self.rel = form_enctype.into();
+        self
+    }
+    
+    pub fn form_method(mut self, form_method: impl Into<Lotus<String>>) -> Self {
+        self.form_method = form_method.into();
+        self
+    }
+    
+    pub fn form_validate(mut self, form_validate: impl Into<Lotus<bool>>) -> Self {
+        self.form_validate = form_validate.into();
+        self
+    }
+    
+    pub fn form_target(mut self, form_target: impl Into<Lotus<String>>) -> Self {
+        self.form_target = form_target.into();
         self
     }
 
-    #[track_caller]
-    pub fn class<V>(mut self, value: V) -> Self
-    where
-        V: ClassPart + 'static,
-    {
-        self.inner.classes.part(value);
-        self
-    }
-
-    #[track_caller]
-    pub fn toggle_class<V, C>(self, value: V, cond: C) -> Self
-    where
-        V: Into<String>,
-        C: Lotus<bool> + Clone + 'static,
-    {
-        self.switch_class(value, "", cond)
-    }
-
-    #[track_caller]
-    pub fn switch_class<TV, FV, C>(mut self, tv: TV, fv: FV, cond: C) -> Self
-    where
-        TV: Into<String>,
-        FV: Into<String>,
-        C: Lotus<bool> + Clone + 'static,
-    {
-        let tv = tv.into();
-        let fv = fv.into();
-        self.inner.classes.part(Bond::new(
-            move || if *cond.get() { tv.clone() } else { fv.clone() },
-        ));
-        self
-    }
-
-    /// Adds an property to this element.
-    #[track_caller]
-    pub fn prop<V>(mut self, name: impl Into<Cow<'static, str>>, value: V) -> Self
-    where
-        V: PropValue + 'static,
-    {
-        self.inner.props.insert(name.into(), Box::new(value));
-        self
-    }
-
-    /// Adds an attribute to this element.
-    #[track_caller]
-    pub fn attr<V>(mut self, name: impl Into<Cow<'static, str>>, value: V) -> Self
-    where
-        V: AttrValue + 'static,
-    {
-        self.inner.attrs.insert(name.into(), Box::new(value));
-        self
-    }
-
-    /// Adds an event listener to this element.
-    #[track_caller]
-    pub fn on<E: EventDescriptor>(
-        self,
-        event: E,
-        #[allow(unused_mut)] // used for tracing in debug
-        mut event_handler: impl FnMut(E::EventType) + 'static,
-    ) -> Self {
-        self.inner.add_event_listener(event, event_handler);
-        self
-    }
-
-    /// Sets the inner Text of this element from the provided
-    /// string slice.
-    ///
-    /// # Security
-    /// Be very careful when using this method. Always remember to
-    /// sanitize the input to avoid a cross-site scripting (XSS)
-    /// vulnerability.
-    pub fn inner_text<V>(mut self, text: V) -> Self
-    where
-        V: AttrValue + 'static,
-    {
-        self.inner.set_inner_text(text);
-        self
-    }
-
-    /// Sets the inner HTML of this element from the provided
-    /// string slice.
-    ///
-    /// # Security
-    /// Be very careful when using this method. Always remember to
-    /// sanitize the input to avoid a cross-site scripting (XSS)
-    /// vulnerability.
-    pub fn html<V>(mut self, html: V) -> Self
-    where
-        V: AttrValue + 'static,
-    {
-        self.inner.set_html(html);
-        self
-    }
-
-    pub fn node_ref(self, node_ref: &NodeRef<web_sys::HtmlElement>) {
-        self.inner.node_ref(node_ref);
-    }
+    super::widget_common_fns!();
 }
 
 pub fn button() -> Button {
