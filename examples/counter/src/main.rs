@@ -53,7 +53,7 @@ impl Widget for Counter {
         p().class("counter")
             .fill(sl::button().on(events::click, clear_counter).html("Clear"))
             .fill(sl::button().on(events::click, decrease_counter).html("-1"))
-            .fill(sl::input().on(events::input, input_counter).prop("value", value))
+            .fill(input().on(events::input, input_counter).prop("value", value))
             .fill(span().html(text.clone()))
             .fill(sl::button().on(events::click, increase_counter).html("+1"))
             .show_in(ctx);

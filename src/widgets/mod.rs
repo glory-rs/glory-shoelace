@@ -1,4 +1,3 @@
-
 #[macro_export]
 macro_rules! widget_common_fns {
     () => {
@@ -26,7 +25,7 @@ macro_rules! widget_common_fns {
         #[track_caller]
         pub fn class<V>(mut self, value: V) -> Self
         where
-        V: Into<Lotus<String>>,
+            V: Into<Lotus<String>>,
         {
             self.inner.classes.part(value);
             self
@@ -51,7 +50,9 @@ macro_rules! widget_common_fns {
             let tv = tv.into();
             let fv = fv.into();
             let cond = cond.into();
-            self.inner.classes.part(Bond::new(move || if *cond.get() { tv.clone() } else { fv.clone() }));
+            self.inner.classes.part(Bond::new(
+                move || if *cond.get() { tv.clone() } else { fv.clone() },
+            ));
             self
         }
 
@@ -125,101 +126,84 @@ macro_rules! widget_common_fns {
 
 pub(crate) use widget_common_fns;
 
-mod alert;
-pub use alert::*;
+macro_rules! shoelace_widget_field {
+    (@ $field:ident: $fty:path) => {
+        pub fn $field(mut self, $field: impl $fty) -> Self {
+            self.inner
+                .props
+                .insert(concat!("sl-", stringify!($field)).into(), Box::new($field.into()));
+            self
+        }
+    };
+    (@prop $field:ident: $fty:path) => {
+        pub fn $field(mut self, $field: impl $fty + 'static) -> Self {
+            self.inner
+                .props
+                .insert(concat!("sl-", stringify!($field)).into(), Box::new($field));
+            self
+        }
+    };
+}
 
-// mod animated_image;
-// pub use animated_image::*;
+#[macro_export]
+macro_rules! shoelace_widget {
+    ($tag:expr, $cfn:ident, $name:ident, {$(
+        #[$meta:meta]
+        $field:ident: $fty:path $(, $prop:ident)?;
+    )*}) => {
+        #[derive(Debug)]
+        pub struct $name {
+            #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
+            pub(crate) inner: Element<web_sys::HtmlElement>,
+            #[cfg(not(all(target_arch = "wasm32", feature = "web-csr")))]
+            pub(crate) inner: Element,
+        }
 
-// mod animation;
-// pub use animation::*;
+        impl $name {
+            pub fn new() -> Self {
+                Self {
+                    inner: Element::new($tag, false),
+                }
+            }
 
-// mod avatar;
-// pub use avatar::*;
+            $(shoelace_widget_field!(@$($prop)? $field: $fty);)*
 
-// mod badge;
-// pub use badge::*;
+            super::widget_common_fns!();
+        }
 
-// mod breadcrumb;
-// pub use breadcrumb::*;
+        pub fn $cfn() -> $name {
+            $name::new()
+        }
 
-mod button;
-pub use button::*;
+        impl Widget for $name {
+            fn flood(&mut self, ctx: &mut Scope) {
+                self.inner.flood(ctx);
+            }
+            fn build(&mut self, ctx: &mut Scope) {
+                self.inner.build(ctx);
+            }
+            fn detach(&mut self, ctx: &mut Scope) {
+                self.inner.detach(ctx);
+            }
+            fn patch(&mut self, ctx: &mut Scope) {
+                self.inner.patch(ctx);
+            }
+        }
 
-// mod card;
-// pub use card::*;
+        impl Deref for $name {
+            type Target = Element<web_sys::HtmlElement>;
+            fn deref(&self) -> &Self::Target {
+                &self.inner
+            }
+        }
+        impl DerefMut for $name {
+            fn deref_mut(&mut self) -> &mut Self::Target {
+                &mut self.inner
+            }
+        }
+    }
+}
+pub(crate) use shoelace_widget;
 
-// mod carousel;
-// pub use carousel::*;
-
-// mod checkbox;
-// pub use checkbox::*;
-
-// mod color_picker;
-// pub use color_picker::*;
-
-// mod copy_button;
-// pub use copy_button::*;
-
-// mod details;
-// pub use details::*;
-
-// mod dialog;
-// pub use dialog::*;
-
-// mod divider;
-// pub use divider::*;
-
-// mod drawer;
-// pub use drawer::*;
-
-// mod dropdown;
-// pub use dropdown::*;
-
-// mod format;
-// pub use format::*;
-
-// mod icon;
-// pub use icon::*;
-
-// mod image_comparer;
-// pub use image_comparer::*;
-
-// mod include;
-// pub use include::*;
-
-mod input;
-pub use input::*;
-
-// mod menu;
-// pub use menu::*;
-
-// mod mutation_observer;
-// pub use mutation_observer::*;
-
-// mod option;
-// pub use Option;
-
-// mod popup;
-// pub use popup::*;
-
-// mod progress_bar;
-// pub use progress_bar::*;
-
-// mod progress_ring;
-// pub use progress_ring::*;
-
-// mod qr_code;
-// pub use qr_code::*;
-
-// mod radio;
-// pub use radio::*;
-
-// mod radio_button;
-// pub use radio_button::*;
-
-// mod radio_group;
-// pub use radio_group::*;
-
-// mod range;
-// pub use range::*;
+mod impls;
+pub use impls::*;
