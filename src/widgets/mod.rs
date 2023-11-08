@@ -127,19 +127,21 @@ macro_rules! widget_common_fns {
 pub(crate) use widget_common_fns;
 
 macro_rules! shoelace_widget_field {
-    (@ $field:ident: $fty:path) => {
+    (@ $(#[$meta:meta])* $field:ident: $fty:path) => {
+        $(#[$meta])*
         pub fn $field(mut self, $field: impl $fty) -> Self {
             self.inner
                 .props
-                .insert(concat!("sl-", stringify!($field)).into(), Box::new($field.into()));
+                .insert(stringify!($field).into(), Box::new($field.into()));
             self
         }
     };
-    (@prop $field:ident: $fty:path) => {
+    (@prop $(#[$meta:meta])* $field:ident: $fty:path) => {
+        $(#[$meta])*
         pub fn $field(mut self, $field: impl $fty + 'static) -> Self {
             self.inner
                 .props
-                .insert(concat!("sl-", stringify!($field)).into(), Box::new($field));
+                .insert(stringify!($field).into(), Box::new($field));
             self
         }
     };
@@ -148,7 +150,7 @@ macro_rules! shoelace_widget_field {
 #[macro_export]
 macro_rules! shoelace_widget {
     ($tag:expr, $cfn:ident, $name:ident, {$(
-        #[$meta:meta]
+        $(#[$meta:meta])*
         $field:ident: $fty:path $(, $prop:ident)?;
     )*}) => {
         #[derive(Debug)]
@@ -166,7 +168,10 @@ macro_rules! shoelace_widget {
                 }
             }
 
-            $(shoelace_widget_field!(@$($prop)? $field: $fty);)*
+         
+            $(
+                shoelace_widget_field!(@$($prop)? $(#[$meta])* $field: $fty);
+            )*
 
             super::widget_common_fns!();
         }
