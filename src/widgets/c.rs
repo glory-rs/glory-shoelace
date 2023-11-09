@@ -90,7 +90,7 @@ define_widget!(
         /// The default value of the form control. Primarily used for resetting the form control.
         default_checked: Into<Lotus<bool>>, into;
 
-        /// By default, form controls are associated with the nearest containing <form> element.
+        /// By default, form controls are associated with the nearest containing `<form>` element.
         ///
         /// This attribute allows you to place the form control outside of a form and associate it with
         /// the form that has this id. The form must be in the same document or shadow root for this to work.
@@ -158,7 +158,7 @@ define_widget!(
         /// pass an array of color values to this property using JavaScript.
         swatches: PropValue;
 
-        /// By default, form controls are associated with the nearest containing <form> element.
+        /// By default, form controls are associated with the nearest containing `<form>` element.
         ///
         /// This attribute allows you to place the form control outside of a form and associate it with
         /// the form that has this id. The form must be in the same document or shadow root for this to work.
@@ -178,7 +178,7 @@ define_widget!(
         /// An id that references an element in the same document from which data will be copied.
         ///
         /// If both this and value are present, this value will take precedence. By default, the target element’s textContent will be copied.
-        /// To copy an attribute, append the attribute name wrapped in square brackets, e.g. from="el[value]". To copy a property, append a
+        /// To copy an attribute, append the attribute name wrapped in square brackets, e.g. `from="el[value]"`. To copy a property, append a
         /// dot and the property name, e.g. from="el.value".
         from: PropValue;
 

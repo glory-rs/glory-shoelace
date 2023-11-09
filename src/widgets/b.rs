@@ -81,13 +81,13 @@ define_widget!(
 
         /// Draws a circular icon button.
         ///
-        /// When this attribute is present, the button expects a single <sl-icon> in the default slot.
+        /// When this attribute is present, the button expects a single `<sl-icon>` in the default slot.
         circle: Into<Lotus<bool>>, into;
 
         /// The type of button.
         ///
-        /// Note that the default value is button instead of submit, which is opposite of how native `button` elements behave.
-        /// When the type is submit, the button will submit the surrounding form.
+        /// Note that the default value is button instead of submit, which is opposite of how native `button` 
+        /// elements behave. When the type is submit, the button will submit the surrounding form.
         type_: PropValue;
 
         /// The name of the button.
@@ -98,11 +98,11 @@ define_widget!(
 
         /// The value of the button.
         ///
-        /// Submitted as a pair with the button’s name as part of the form data, but only when this button is the submitter.
-        /// This attribute is ignored when href is present.
+        /// Submitted as a pair with the button’s name as part of the form data, but only when this button is 
+        /// the submitter. This attribute is ignored when href is present.
         value: PropValue;
 
-        /// When set, the underlying button will be rendered as an <a> with this href instead of a `button`.
+        /// When set, the underlying button will be rendered as an `<a>` with this href instead of a `button`.
         href: PropValue;
 
         /// Tells the browser where to open the link. Only used when href is present.
@@ -111,8 +111,9 @@ define_widget!(
         ///	When using href, this attribute will map to the underlying link’s rel attribute.
         ///
         /// Unlike regular links, the default is noreferrer noopener to prevent security exploits.
-        /// However, if you’re using target to point to a specific tab/window, this will prevent that from working correctly.
-        /// You can remove or change the default value by setting the attribute to an empty string or a value of your choice, respectively.
+        /// However, if you’re using target to point to a specific tab/window, this will prevent that from working 
+        /// correctly. You can remove or change the default value by setting the attribute to an empty string or 
+        /// a value of your choice, respectively.
         rel: PropValue;
 
         /// Tells the browser to download the linked file as this filename.

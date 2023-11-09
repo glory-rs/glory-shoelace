@@ -195,6 +195,7 @@ macro_rules! define_widget {
             super::widget_common_fns!();
         }
 
+        #[doc = concat!("Create new instance of [`", stringify!($name), "`]")]
         pub fn $cfn() -> $name {
             $name::new()
         }

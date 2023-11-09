@@ -50,7 +50,7 @@ define_widget!(
         /// can result in XSS attacks.
         src: PropValue;
 
-        /// When set, the underlying button will be rendered as an <a> with this href instead of a <button>.
+        /// When set, the underlying button will be rendered as an `<a>` with this href instead of a `<button>`.
         href: PropValue;
 
         /// Tells the browser where to open the link. Only used when href is set.
@@ -148,7 +148,7 @@ define_widget!(
         /// Hides the browser’s built-in increment/decrement spin buttons for number inputs. 
         no_spin_buttons: Into<Lotus<bool>>, into;
 
-        /// By default, form controls are associated with the nearest containing <form> element. 
+        /// By default, form controls are associated with the nearest containing `<form>` element. 
         /// 
         /// This attribute allows you to place the form control outside of a form and associate it with the 
         /// form that has this id. The form must be in the same document or shadow root for this to work. 
