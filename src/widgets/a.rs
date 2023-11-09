@@ -9,12 +9,12 @@ use wasm_bindgen::{JsCast, UnwrapThrowExt};
 use glory_core::reflow::{Bond, Lotus};
 use glory_core::view::{ViewId, ViewPosition};
 use glory_core::web::events::EventDescriptor;
-use glory_core::web::{AttrValue, Classes, ClassPart, PropValue};
+use glory_core::web::{AttrValue, ClassPart, Classes, PropValue};
 use glory_core::{Filler, IntoFiller};
 use glory_core::{NodeRef, Scope, Widget};
 
 define_widget!(
-    /// Alerts are used to display important messages inline or as toast notifications. 
+    /// Alerts are used to display important messages inline or as toast notifications.
     alert, "sl-alert", Alert, {
         /// Indicates whether or not the alert is open.
         open: Into<Lotus<bool>>, into;
@@ -31,7 +31,7 @@ define_widget!(
 );
 
 define_widget!(
-    /// A component for displaying animated GIFs and WEBPs that play and pause on interaction. 
+    /// A component for displaying animated GIFs and WEBPs that play and pause on interaction.
     animated_image, "sl-animated-image", AnimatedImage, {
         /// The path to the image to load.
         src: PropValue;
@@ -45,7 +45,7 @@ define_widget!(
 );
 
 define_widget!(
-    /// Animate elements declaratively with nearly 100 baked-in presets, or roll your own with custom keyframes. 
+    /// Animate elements declaratively with nearly 100 baked-in presets, or roll your own with custom keyframes.
     animation, "sl-animation", Animation, {
         /// The name of the built-in animation to use.
         ///
@@ -108,8 +108,8 @@ define_widget!(
 
         /// A label to use to describe the avatar to assistive devices.
         label: PropValue;
-        
-        /// Initials to use as a fallback when no image is available (1–2 characters max recommended). 
+
+        /// Initials to use as a fallback when no image is available (1–2 characters max recommended).
         initials: PropValue;
 
         /// Indicates how the browser should load the image.
