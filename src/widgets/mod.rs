@@ -25,7 +25,7 @@ macro_rules! widget_common_fns {
         #[track_caller]
         pub fn class<V>(mut self, value: V) -> Self
         where
-            V: Into<Lotus<String>>,
+            V: ClassPart + 'static,
         {
             self.inner.classes.part(value);
             self
@@ -126,8 +126,26 @@ macro_rules! widget_common_fns {
 
 pub(crate) use widget_common_fns;
 
-macro_rules! shoelace_widget_field {
-    (@ $(#[$meta:meta])* $field:ident: $fty:path) => {
+macro_rules! define_widget_field {
+    (@into $(#[$meta:meta])* $field:ident $fname:literal: $fty:path) => {
+        $(#[$meta])*
+        pub fn $field(mut self, $field: impl $fty) -> Self {
+            self.inner
+                .props
+                .insert($fname.into(), Box::new($field.into()));
+            self
+        }
+    };
+    (@ $(#[$meta:meta])* $field:ident $fname:literal: $fty:path) => {
+        $(#[$meta])*
+        pub fn $field(mut self, $field: impl $fty + 'static) -> Self {
+            self.inner
+                .props
+                .insert($fname.into(), Box::new($field));
+            self
+        }
+    };
+    (@into $(#[$meta:meta])* $field:ident: $fty:path) => {
         $(#[$meta])*
         pub fn $field(mut self, $field: impl $fty) -> Self {
             self.inner
@@ -136,7 +154,7 @@ macro_rules! shoelace_widget_field {
             self
         }
     };
-    (@prop $(#[$meta:meta])* $field:ident: $fty:path) => {
+    (@ $(#[$meta:meta])* $field:ident: $fty:path) => {
         $(#[$meta])*
         pub fn $field(mut self, $field: impl $fty + 'static) -> Self {
             self.inner
@@ -148,11 +166,12 @@ macro_rules! shoelace_widget_field {
 }
 
 #[macro_export]
-macro_rules! shoelace_widget {
-    ($tag:expr, $cfn:ident, $name:ident, {$(
-        $(#[$meta:meta])*
-        $field:ident: $fty:path $(, $prop:ident)?;
+macro_rules! define_widget {
+    ($(#[$meta:meta])* $cfn:ident, $tag:literal, $name:ident, {$(
+        $(#[$fmeta:meta])*
+        $field:ident $($fname:literal)?: $fty:path $(, $into:ident)?;
     )*}) => {
+        $(#[$meta])*
         #[derive(Debug)]
         pub struct $name {
             #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
@@ -168,9 +187,9 @@ macro_rules! shoelace_widget {
                 }
             }
 
-         
+
             $(
-                shoelace_widget_field!(@$($prop)? $(#[$meta])* $field: $fty);
+                define_widget_field!(@$($into)? $(#[$fmeta])* $field $($fname)?: $fty);
             )*
 
             super::widget_common_fns!();
@@ -196,7 +215,10 @@ macro_rules! shoelace_widget {
         }
 
         impl Deref for $name {
+            #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
             type Target = Element<web_sys::HtmlElement>;
+            #[cfg(not(all(target_arch = "wasm32", feature = "web-csr")))]
+            type Target = Element;
             fn deref(&self) -> &Self::Target {
                 &self.inner
             }
@@ -208,7 +230,46 @@ macro_rules! shoelace_widget {
         }
     }
 }
-pub(crate) use shoelace_widget;
+pub(crate) use define_widget;
 
-mod impls;
-pub use impls::*;
+mod a;
+pub use a::*;
+
+mod b;
+pub use b::*;
+
+mod c;
+pub use c::*;
+
+mod d;
+pub use d::*;
+
+mod f;
+pub use f::*;
+
+mod i;
+pub use i::*;
+
+mod m;
+pub use m::*;
+
+mod o;
+pub use o::*;
+
+mod p;
+pub use p::*;
+
+mod q;
+pub use q::*;
+
+mod r;
+pub use r::*;
+
+mod s;
+pub use s::*;
+
+mod t;
+pub use t::*;
+
+mod v;
+pub use v::*;
