@@ -1,16 +1,14 @@
 use std::borrow::Cow;
-use std::collections::BTreeMap;
-use std::fmt;
 use std::ops::{Deref, DerefMut};
 
 use glory_core::web::Element;
+#[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
 use wasm_bindgen::{JsCast, UnwrapThrowExt};
 
 use glory_core::reflow::{Bond, Lotus};
-use glory_core::view::{ViewId, ViewPosition};
 use glory_core::web::events::EventDescriptor;
-use glory_core::web::{AttrValue, ClassPart, Classes, PropValue};
-use glory_core::{Filler, IntoFiller};
+use glory_core::web::{AttrValue, ClassPart, PropValue};
+use glory_core::IntoFiller;
 use glory_core::{NodeRef, Scope, Widget};
 
 define_widget!(

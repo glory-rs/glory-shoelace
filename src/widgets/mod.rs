@@ -1,4 +1,4 @@
-#[macro_export]
+// #[macro_export]
 macro_rules! widget_common_fns {
     () => {
         pub fn fill(mut self, filler: impl IntoFiller) -> Self {
@@ -165,7 +165,7 @@ macro_rules! define_widget_field {
     };
 }
 
-#[macro_export]
+// #[macro_export]
 macro_rules! define_widget {
     ($(#[$meta:meta])* $cfn:ident, $tag:literal, $name:ident, {$(
         $(#[$fmeta:meta])*
@@ -231,7 +231,6 @@ macro_rules! define_widget {
         }
     }
 }
-pub(crate) use define_widget;
 
 mod a;
 pub use a::*;

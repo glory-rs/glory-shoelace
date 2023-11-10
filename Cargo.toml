@@ -8,7 +8,7 @@ description = """
 Shoelance for Glory.
 """
 homepage = "https://glory.rs"
-repository = "https://github.com/glory-rs/glory"
+repository = "https://github.com/glory-rs/glory-shoelace"
 documentation = "https://docs.rs/glory-shoelace/"
 readme = "./README.md"
 keywords = ["dom", "ui", "gui", "react", "wasm"]
