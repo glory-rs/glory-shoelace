@@ -22,12 +22,9 @@ web-ssr = []
 __single_holder = []
 
 [dependencies]
-cfg-if = "1.0.0"
-educe = "0.4.23"
-js-sys = "0.3.65"
 web-sys = { version = "0.3", features = ["Element", "HtmlElement"] }
 wasm-bindgen = { version = "0.2.88", optional = true }
-glory-core = {version = "0.2.0"}
+glory-core = { version = "0.2.0", path = "../glory/crates/core" }
 
 [package.metadata.cargo-all-features]
 denylist = ["stable"]

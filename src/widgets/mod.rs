@@ -95,11 +95,11 @@ macro_rules! widget_common_fns {
         /// Be very careful when using this method. Always remember to
         /// sanitize the input to avoid a cross-site scripting (XSS)
         /// vulnerability.
-        pub fn inner_text<V>(mut self, text: V) -> Self
+        pub fn text<V>(mut self, text: V) -> Self
         where
             V: AttrValue + 'static,
         {
-            self.inner.set_inner_text(text);
+            self.inner.set_text(text);
             self
         }
 
