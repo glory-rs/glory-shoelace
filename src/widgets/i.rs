@@ -80,16 +80,16 @@ define_widget!(
 define_widget!(
     /// Includes give you the power to embed external HTML files into the page.
     include, "sl-include", Include, {
-        /// The location of the HTML file to include. 
-        /// 
-        /// Be sure you trust the content you are including as it will be executed as code and can result in XSS attacks. 
+        /// The location of the HTML file to include.
+        ///
+        /// Be sure you trust the content you are including as it will be executed as code and can result in XSS attacks.
         src: PropValue;
 
         /// The fetch mode to use.
         mode: PropValue;
 
-        /// Allows included scripts to be executed. 
-        /// 
+        /// Allows included scripts to be executed.
+        ///
         /// Be sure you trust the content you are including as it will be executed as code and can result in XSS attacks.
         allow_scripts: PropValue;
     }
@@ -98,9 +98,9 @@ define_widget!(
 define_widget!(
     /// Inputs collect data from the user.
     input, "sl-input", Input, {
-        /// The type of input. 
-        /// 
-        /// Works the same as a native <input> element, but only a subset of types are supported. Defaults to text. 
+        /// The type of input.
+        ///
+        /// Works the same as a native <input> element, but only a subset of types are supported. Defaults to text.
         type_: PropValue;
 
         /// The name of the input, submitted as a name/value pair with form data.
@@ -121,7 +121,7 @@ define_widget!(
         /// Draws a pill-style input with rounded edges.
         pill: Into<Lotus<bool>>, into;
 
-        /// The input’s label. If you need to display HTML, use the label slot instead. 
+        /// The input’s label. If you need to display HTML, use the label slot instead.
         label: PropValue;
 
         /// The input’s help text. If you need to display HTML, use the help-text slot instead.
@@ -139,19 +139,19 @@ define_widget!(
         /// The input’s help text. If you need to display HTML, use the help-text slot instead.
         readonly: Into<Lotus<bool>>, into;
 
-        /// Adds a button to toggle the password’s visibility. Only applies to password types. 
+        /// Adds a button to toggle the password’s visibility. Only applies to password types.
         password_toggle: Into<Lotus<bool>>, into;
 
         /// Determines whether or not the password is currently visible. Only applies to password input types.
         password_visible: Into<Lotus<bool>>, into;
 
-        /// Hides the browser’s built-in increment/decrement spin buttons for number inputs. 
+        /// Hides the browser’s built-in increment/decrement spin buttons for number inputs.
         no_spin_buttons: Into<Lotus<bool>>, into;
 
-        /// By default, form controls are associated with the nearest containing `<form>` element. 
-        /// 
-        /// This attribute allows you to place the form control outside of a form and associate it with the 
-        /// form that has this id. The form must be in the same document or shadow root for this to work. 
+        /// By default, form controls are associated with the nearest containing `<form>` element.
+        ///
+        /// This attribute allows you to place the form control outside of a form and associate it with the
+        /// form that has this id. The form must be in the same document or shadow root for this to work.
         form: PropValue;
 
         /// Makes the input a required field.
@@ -166,46 +166,46 @@ define_widget!(
         /// The maximum length of input that will be considered valid.
         max_length: PropValue;
 
-        /// The input’s minimum value. Only applies to date and number input types. 		
+        /// The input’s minimum value. Only applies to date and number input types.
         min: PropValue;
 
-        /// The input’s maximum value. Only applies to date and number input types. 
+        /// The input’s maximum value. Only applies to date and number input types.
         max: PropValue;
 
-        /// Specifies the granularity that the value must adhere to, or the special value any which means no stepping is implied, allowing any numeric value. 
-        /// 
-        /// Only applies to date and number input types. 
+        /// Specifies the granularity that the value must adhere to, or the special value any which means no stepping is implied, allowing any numeric value.
+        ///
+        /// Only applies to date and number input types.
         step: PropValue;
 
-        /// Controls whether and how text input is automatically capitalized as it is entered by the user. 
+        /// Controls whether and how text input is automatically capitalized as it is entered by the user.
         auto_capitalize: PropValue;
 
-        /// Indicates whether the browser’s autocorrect feature is on or off. 	
+        /// Indicates whether the browser’s autocorrect feature is on or off.
         auto_correct: PropValue;
 
-        /// Specifies what permission the browser has to provide assistance in filling out form field values. 
-        /// 
-        /// Refer to this page on MDN for available values. 
+        /// Specifies what permission the browser has to provide assistance in filling out form field values.
+        ///
+        /// Refer to this page on MDN for available values.
         auto_complete: PropValue;
 
-        /// Indicates that the input should receive focus on page load. 	
+        /// Indicates that the input should receive focus on page load.
         auto_focus: Into<Lotus<bool>>, into;
 
-        /// Used to customize the label or icon of the Enter key on virtual keyboards. 	
+        /// Used to customize the label or icon of the Enter key on virtual keyboards.
         enter_key_hint: PropValue;
 
         /// Enables spell checking on the input.
         spell_check: Into<Lotus<bool>>, into;
 
-        /// Tells the browser what type of data will be entered by the user, allowing it to display the appropriate virtual keyboard on supportive devices. 
+        /// Tells the browser what type of data will be entered by the user, allowing it to display the appropriate virtual keyboard on supportive devices.
         input_mode: PropValue;
 
-        /// Gets or sets the current value as a Date object. 
-        /// 
-        /// Returns null if the value can’t be converted. This will use the native `<input type="{{type}}">` implementation and may result in an error. 
+        /// Gets or sets the current value as a Date object.
+        ///
+        /// Returns null if the value can’t be converted. This will use the native `<input type="{{type}}">` implementation and may result in an error.
         value_as_date: PropValue;
 
-        /// Gets or sets the current value as a number. Returns NaN if the value can’t be converted. 
+        /// Gets or sets the current value as a number. Returns NaN if the value can’t be converted.
         value_as_number: PropValue;
     }
 );

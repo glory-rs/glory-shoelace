@@ -9,7 +9,7 @@ use wasm_bindgen::{JsCast, UnwrapThrowExt};
 use glory_core::reflow::{Bond, Lotus};
 use glory_core::view::{ViewId, ViewPosition};
 use glory_core::web::events::EventDescriptor;
-use glory_core::web::{AttrValue, Classes, ClassPart, PropValue};
+use glory_core::web::{AttrValue, ClassPart, Classes, PropValue};
 use glory_core::{Filler, IntoFiller};
 use glory_core::{NodeRef, Scope, Widget};
 

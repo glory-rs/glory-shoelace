@@ -81,7 +81,7 @@ define_widget!(
 
         /// By default, form controls are associated with the nearest containing `<form>` element.
         ///
-        /// This attribute allows you to place the form control outside of a form and associate it with the 
+        /// This attribute allows you to place the form control outside of a form and associate it with the
         /// form that has this id. The form must be in the same document or shadow root for this to work.
         form: PropValue;
 
@@ -107,31 +107,31 @@ define_widget!(
 );
 
 define_widget!(
-    /// Split panels display two adjacent panels, allowing the user to reposition them. 
+    /// Split panels display two adjacent panels, allowing the user to reposition them.
     split_panel, "sl-split-panel", SplitPanel, {
-        /// The current position of the divider from the primary panel’s edge as a percentage 0–100. 
-        /// 
-        /// Defaults to 50% of the container’s initial size. 
+        /// The current position of the divider from the primary panel’s edge as a percentage 0–100.
+        ///
+        /// Defaults to 50% of the container’s initial size.
         position: PropValue;
 
-        /// The current position of the divider from the primary panel’s edge in pixels. 
+        /// The current position of the divider from the primary panel’s edge in pixels.
         position_in_pixels: PropValue;
 
-        /// Draws the split panel in a vertical orientation with the start and end panels stacked. 
+        /// Draws the split panel in a vertical orientation with the start and end panels stacked.
         vertical: Into<Lotus<bool>>, into;
 
-        /// Disables resizing. Note that the position may still change as a result of resizing the host element. 
+        /// Disables resizing. Note that the position may still change as a result of resizing the host element.
         disabled: Into<Lotus<bool>>, into;
 
-        /// If no primary panel is designated, both panels will resize proportionally when the host element is resized. 
-        /// 
-        /// If a primary panel is designated, it will maintain its size and the other panel will grow or shrink as 
-        /// needed when the host element is resized. 
+        /// If no primary panel is designated, both panels will resize proportionally when the host element is resized.
+        ///
+        /// If a primary panel is designated, it will maintain its size and the other panel will grow or shrink as
+        /// needed when the host element is resized.
         primary: PropValue;
 
         /// One or more space-separated values at which the divider should snap.
-        /// 
-        ///  Values can be in pixels or percentages, e.g. "100px 50%". 
+        ///
+        ///  Values can be in pixels or percentages, e.g. "100px 50%".
         snap: PropValue;
 
         /// The interval at which the range will increase and decrease.
@@ -145,10 +145,10 @@ define_widget!(
 define_widget!(
     /// Switches allow the user to toggle an option on or off.
     switch, "sl-switch", Switch, {
-        /// The name of the switch, submitted as a name/value pair with form data. 	
+        /// The name of the switch, submitted as a name/value pair with form data.
         name: PropValue;
 
-        /// The current value of the switch, submitted as a name/value pair with form data. 
+        /// The current value of the switch, submitted as a name/value pair with form data.
         value: PropValue;
 
         /// The switch’s size.
@@ -160,13 +160,13 @@ define_widget!(
         /// Draws the switch in a checked state.
         checked: Into<Lotus<bool>>, into;
 
-        /// The default value of the form control. Primarily used for resetting the form control. 
+        /// The default value of the form control. Primarily used for resetting the form control.
         default_checked: Into<Lotus<bool>>, into;
 
-        /// By default, form controls are associated with the nearest containing `<form>` element. 
-        /// 
-        /// This attribute allows you to place the form control outside of a form and associate it with the form that 
-        /// has this id. The form must be in the same document or shadow root for this to work. 
+        /// By default, form controls are associated with the nearest containing `<form>` element.
+        ///
+        /// This attribute allows you to place the form control outside of a form and associate it with the form that
+        /// has this id. The form must be in the same document or shadow root for this to work.
         form: PropValue;
 
         /// Makes the switch a required field.

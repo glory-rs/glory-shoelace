@@ -86,7 +86,7 @@ define_widget!(
 
         /// The type of button.
         ///
-        /// Note that the default value is button instead of submit, which is opposite of how native `button` 
+        /// Note that the default value is button instead of submit, which is opposite of how native `button`
         /// elements behave. When the type is submit, the button will submit the surrounding form.
         type_: PropValue;
 
@@ -98,7 +98,7 @@ define_widget!(
 
         /// The value of the button.
         ///
-        /// Submitted as a pair with the button’s name as part of the form data, but only when this button is 
+        /// Submitted as a pair with the button’s name as part of the form data, but only when this button is
         /// the submitter. This attribute is ignored when href is present.
         value: PropValue;
 
@@ -111,8 +111,8 @@ define_widget!(
         ///	When using href, this attribute will map to the underlying link’s rel attribute.
         ///
         /// Unlike regular links, the default is noreferrer noopener to prevent security exploits.
-        /// However, if you’re using target to point to a specific tab/window, this will prevent that from working 
-        /// correctly. You can remove or change the default value by setting the attribute to an empty string or 
+        /// However, if you’re using target to point to a specific tab/window, this will prevent that from working
+        /// correctly. You can remove or change the default value by setting the attribute to an empty string or
         /// a value of your choice, respectively.
         rel: PropValue;
 

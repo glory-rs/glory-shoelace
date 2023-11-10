@@ -18,11 +18,11 @@ define_widget!(
     format_bytes, "sl-format-bytes", FormatBytes, {
         /// The number to format in bytes.
         value: PropValue;
-        
+
         /// The type of unit to display.
         unit: PropValue;
 
-        /// Determines how to display the result, e.g. “100 bytes”, “100 b”, or “100b”. 
+        /// Determines how to display the result, e.g. “100 bytes”, “100 b”, or “100b”.
         display: PropValue;
     }
 );
@@ -30,16 +30,16 @@ define_widget!(
 define_widget!(
     /// Formats a date/time using the specified locale and options.
     format_date, "sl-format-date", FormatDate, {
-        /// The date/time to format. 
-        /// 
-        /// If not set, the current date and time will be used. When passing a string, it’s strongly 
-        /// recommended to use the ISO 8601 format to ensure timezones are handled correctly. 
-        /// To convert a date to this format in JavaScript, use date.toISOString(). 
+        /// The date/time to format.
+        ///
+        /// If not set, the current date and time will be used. When passing a string, it’s strongly
+        /// recommended to use the ISO 8601 format to ensure timezones are handled correctly.
+        /// To convert a date to this format in JavaScript, use date.toISOString().
         date: PropValue;
 
         /// The format for displaying the weekday.
         weekday: PropValue;
-        
+
         /// The format for displaying the era.
         era: PropValue;
 
@@ -48,7 +48,7 @@ define_widget!(
 
         /// The format for displaying the month.
         month: PropValue;
-        
+
         /// The format for displaying the day.
         day: PropValue;
 
@@ -80,29 +80,29 @@ define_widget!(
 
         /// The formatting style to use.
         type_: PropValue;
-        
+
         /// Turns off grouping separators.
         no_grouping: Into<Lotus<bool>>, into;
 
-        /// The ISO 4217 currency code to use when formatting. 	
+        /// The ISO 4217 currency code to use when formatting.
         currency: PropValue;
 
         /// How to display the currency.
         currency_display: PropValue;
-        
-        /// The minimum number of integer digits to use. Possible values are 1–21. 
+
+        /// The minimum number of integer digits to use. Possible values are 1–21.
         minimum_integer_digits: PropValue;
 
-        /// The minimum number of fraction digits to use. Possible values are 0–20. 
+        /// The minimum number of fraction digits to use. Possible values are 0–20.
         minimum_fraction_digits: PropValue;
 
-        /// The maximum number of fraction digits to use. Possible values are 0–0. 
+        /// The maximum number of fraction digits to use. Possible values are 0–0.
         maximum_fraction_digits: PropValue;
 
-        /// The minimum number of significant digits to use. Possible values are 1–21. 
+        /// The minimum number of significant digits to use. Possible values are 1–21.
         minimum_significant_digits: PropValue;
 
-        /// The maximum number of significant digits to use,. Possible values are 1–21. 
+        /// The maximum number of significant digits to use,. Possible values are 1–21.
         maximum_significant_digits : PropValue;
     }
 );
