@@ -1,6 +1,6 @@
 [package]
 name = "glory-shoelace"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 edition = "2021"
 rust-version = "1.73"
@@ -27,7 +27,7 @@ educe = "0.4.23"
 js-sys = "0.3.65"
 web-sys = { version = "0.3", features = ["Element", "HtmlElement"] }
 wasm-bindgen = { version = "0.2.88", optional = true }
-glory-core = {version = "0.1.0", path = "../glory/crates/core"}
+glory-core = {version = "0.2.0"}
 
 [package.metadata.cargo-all-features]
 denylist = ["stable"]
