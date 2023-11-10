@@ -9,11 +9,11 @@ Shoelance for Glory.
 """
 homepage = "https://glory.rs"
 repository = "https://github.com/glory-rs/glory"
-documentation = "https://docs.rs/shoelace/"
+documentation = "https://docs.rs/glory-shoelace/"
 readme = "./README.md"
-keywords = ["http", "async", "web", "framework", "server"]
+keywords = ["dom", "ui", "gui", "react", "wasm"]
 license = "MIT OR Apache-2.0"
-categories = ["web-programming::http-server", "web-programming::websocket", "network-programming", "asynchronous"]
+categories = ["web-programming"]
 
 [features]
 default = ["web-csr"]
