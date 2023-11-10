@@ -1,6 +1,6 @@
 [package]
 name = "glory-shoelace"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 edition = "2021"
 rust-version = "1.73"
