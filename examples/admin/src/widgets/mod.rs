@@ -17,15 +17,26 @@ use glory::*;
 
 use crate::models::Notification;
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct PageInfo {
     title: Cage<String>,
     description: Cage<String>,
-    body_class: Cage<String>,
     theme_name: Cage<String>,
     notifications: Cage<Vec<Notification>>,
 
     sidebar_is_open: Cage<bool>,
+}
+
+impl Default for PageInfo {
+    fn default() -> Self {
+        Self {
+            title: Cage::new("Glory Admin".to_owned()),
+            description: Cage::new("Glory Admin".to_owned()),
+            theme_name: Cage::new("light".to_owned()),
+            notifications: Cage::new(vec![]),
+            sidebar_is_open: Cage::new(true),
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -37,7 +48,6 @@ impl Widget for NoMatch {
         info.title.revise(|mut v| *v = "Not found page".to_owned());
         info.description
             .revise(|mut v| *v = "This is not found page".to_owned());
-        info.body_class.revise(|mut v| *v = "not-found".to_owned());
     }
     fn build(&mut self, ctx: &mut Scope) {
         info!("NoMatch::build");

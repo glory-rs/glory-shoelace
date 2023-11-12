@@ -17,7 +17,6 @@ impl Widget for Home {
         info.title.revise(|mut v| *v = "Home page".to_owned());
         info.description
             .revise(|mut v| *v = "This is home page".to_owned());
-        info.body_class.revise(|mut v| *v = "home".to_owned());
     }
     fn build(&mut self, ctx: &mut Scope) {
         div().fill(h2().html("Home")).show_in(ctx);

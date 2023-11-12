@@ -25,7 +25,6 @@ impl Widget for Topper {
         info.title.revise(|mut v| *v = "Home page".to_owned());
         info.description
             .revise(|mut v| *v = "This is home page".to_owned());
-        info.body_class.revise(|mut v| *v = "home".to_owned());
     }
     fn build(&mut self, ctx: &mut Scope) {
         let info = {
@@ -37,9 +36,9 @@ impl Widget for Topper {
         .fill(
             div().class("flex flex-grow items-center justify-between py-1 px-4 shadow-2 md:px-6 2xl:px-11")
             .fill(
-                div().class("flex items-center gap-2 sm:gap-4 lg:hidden")
+                div().class("flex items-center gap-2 sm:gap-4")
                 .fill(
-                    sl::icon_button().class("block lg:hidden").name("list").label("Menu")
+                    sl::icon_button().class("block").name("list").label("Menu")
                 ).fill(
                     a().class("block flex-shrink-0 lg:hidden").href("/")
                     .fill(img().class("h-8 w-8").src("/images/logos/glory.svg").alt("Glory"))
@@ -137,7 +136,7 @@ impl Widget for NotificationCenter {
             ).show_in(ctx);
 
         sl::drawer().fill(
-            h5().class("text-sm font-medium text-bodydark2").html("Notification")).fill(
+            h5().class("text-sm font-medium text-bodydark2").html("Notifications")).fill(
             ul().class("flex h-auto flex-col overflow-y-auto").fill(
                 li().fill(Each::new(Lotus::<Vec<Notification>>::from(self.notifications.clone()), |notification|{
                     notification.id

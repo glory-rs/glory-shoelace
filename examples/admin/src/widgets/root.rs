@@ -30,7 +30,7 @@ impl Widget for Root {
                 script().type_("module").src("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/shoelace-autoloader.js")
             )
             .show_in(ctx);
-        body_meta().class("font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400").show_in(ctx);
+        body_meta().class("dark text-bodydark bg-boxdark-2").show_in(ctx);
 
         let path = ctx.truck().obtain::<Locator>().unwrap().path();
         div()

@@ -204,6 +204,8 @@ macro_rules! define_widget {
             fn flood(&mut self, ctx: &mut Scope) {
                 self.inner.flood(ctx);
             }
+            #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
+            fn hydrate(&mut self, ctx: &mut Scope) {self.inner.hydrate(ctx);}
             fn build(&mut self, ctx: &mut Scope) {
                 self.inner.build(ctx);
             }
