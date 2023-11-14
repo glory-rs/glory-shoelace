@@ -78,13 +78,11 @@ macro_rules! widget_common_fns {
 
         /// Adds an event listener to this element.
         #[track_caller]
-        pub fn on<E: EventDescriptor>(
-            self,
-            event: E,
-            #[allow(unused_mut)] // used for tracing in debug
-            mut event_handler: impl FnMut(E::EventType) + 'static,
-        ) -> Self {
-            self.inner.add_event_listener(event, event_handler);
+        pub fn on<E, H>(#[allow(unused_mut)]mut self, event: E, handler: H) -> Self 
+        where
+            E: EventDescriptor + 'static,
+            H: FnMut(E::EventType) + 'static,{
+            self.inner.add_event_listener(event, handler);
             self
         }
 

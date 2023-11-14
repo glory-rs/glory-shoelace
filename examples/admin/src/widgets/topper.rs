@@ -3,6 +3,7 @@ use std::rc::Rc;
 
 use glory::reflow::*;
 use glory::routing::*;
+use glory::web::events;
 use glory::web::widgets::*;
 use glory::widgets::*;
 use glory::{Scope, Widget};
@@ -19,13 +20,6 @@ impl Topper {
     }
 }
 impl Widget for Topper {
-    fn attach(&mut self, ctx: &mut Scope) {
-        let truck = ctx.truck();
-        let info = truck.obtain::<PageInfo>().unwrap();
-        info.title.revise(|mut v| *v = "Home page".to_owned());
-        info.description
-            .revise(|mut v| *v = "This is home page".to_owned());
-    }
     fn build(&mut self, ctx: &mut Scope) {
         let info = {
             let truck = ctx.truck();
@@ -34,11 +28,19 @@ impl Widget for Topper {
 
         header().class("sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none")
         .fill(
-            div().class("flex flex-grow items-center justify-between py-1 px-4 shadow-2 md:px-6 2xl:px-11")
+            div().class("flex flex-grow items-center justify-between py-1 px-4 shadow-2")
             .fill(
                 div().class("flex items-center gap-2 sm:gap-4")
                 .fill(
-                    sl::icon_button().class("block").name("list").label("Menu")
+                    sl::button().size("medium").fill(
+                        sl::icon().name("list").label("Menu")
+                    ).on(events::click, {
+                        let info = info.clone();
+                        move |_| {
+                            glory::info!("sidebar_is_open: {:?}", info.sidebar_opened);
+                            info.sidebar_opened.revise(|mut v| *v = !*v);
+                        }
+                    })
                 ).fill(
                     a().class("block flex-shrink-0 lg:hidden").href("/")
                     .fill(img().class("h-8 w-8").src("/images/logos/glory.svg").alt("Glory"))
@@ -46,7 +48,7 @@ impl Widget for Topper {
             ).fill(
                 div().class("hidden sm:block")
             ).fill(
-                div().class("flex items-center gap-3 2xsm:gap-7").fill(
+                div().class("flex items-center gap-2 2xsm:gap-7").fill(
                     form().action("/").method("POST")
                     .fill(
                         div().class("relative")
@@ -97,20 +99,23 @@ impl Widget for ThemeSwitch {
                 "sun"
             }
         });
-        sl::icon_button().class("h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray")
-            .name(icon_name)
-            // .on("click", {
-            //     let theme_name = self.theme_name.clone();
-            //     || {
-            //         theme_name.revise(|name| {
-            //             if *name == "dark" {
-            //                 *name == "light"
-            //             } else {
-            //                 *name = "dark"
-            //             }
-            //         });
-            //     }
-            // })
+        sl::button()
+            .size("medium")
+            .circle(true)
+            .fill(sl::icon().name(icon_name))
+            .on(events::click, {
+                let theme_name = self.theme_name.clone();
+                move |_| {
+                    glory::info!("theme_name: {:?}", theme_name);
+                    theme_name.revise(|mut name| {
+                        if *name == "dark" {
+                            *name = "light".to_owned();
+                        } else {
+                            *name = "dark".to_owned();
+                        }
+                    });
+                }
+            })
             .show_in(ctx);
     }
 }
@@ -127,13 +132,23 @@ impl NotificationCenter {
 
 impl Widget for NotificationCenter {
     fn build(&mut self, ctx: &mut Scope) {
-        a().class("relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray")
-            .href("#").fill(
-                sl::icon_button().name("bell")
-            ).fill(
-                span().class("absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1")
-                    .toggle_class("hidden", self.notifications.map(|n|n.iter().any(|i|!i.is_read)))
-            ).show_in(ctx);
+        a().class("relative flex h-8.5 w-8.5 items-center justify-center")
+            .href("#")
+            .fill(
+                sl::button()
+                    .size("medium")
+                    .circle(true)
+                    .fill(sl::icon().name("bell")),
+            )
+            .fill(
+                span()
+                    .class("absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1")
+                    .toggle_class(
+                        "hidden",
+                        self.notifications.map(|n| n.iter().any(|i| !i.is_read)),
+                    ),
+            )
+            .show_in(ctx);
 
         sl::drawer().fill(
             h5().class("text-sm font-medium text-bodydark2").html("Notifications")).fill(
@@ -168,11 +183,10 @@ impl Widget for UserCenter {
     fn build(&mut self, ctx: &mut Scope) {
         sl::dropdown()
             .fill(
-                img()
+                sl::avatar()
                     .attr("slot", "trigger")
-                    .class("rounded-full h-12 w-12")
-                    .src("/images/users/user-02.png")
-                    .alt("Avatar"),
+                    .image("/images/users/user-02.png")
+                    .label("Avatar"),
             )
             .fill(
                 sl::menu()

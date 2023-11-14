@@ -24,7 +24,7 @@ pub struct PageInfo {
     theme_name: Cage<String>,
     notifications: Cage<Vec<Notification>>,
 
-    sidebar_is_open: Cage<bool>,
+    sidebar_opened: Cage<bool>,
 }
 
 impl Default for PageInfo {
@@ -34,7 +34,7 @@ impl Default for PageInfo {
             description: Cage::new("Glory Admin".to_owned()),
             theme_name: Cage::new("light".to_owned()),
             notifications: Cage::new(vec![]),
-            sidebar_is_open: Cage::new(true),
+            sidebar_opened: Cage::new(true),
         }
     }
 }
