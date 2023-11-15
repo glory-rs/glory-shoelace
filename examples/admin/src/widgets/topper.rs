@@ -9,7 +9,7 @@ use glory::widgets::*;
 use glory::{Scope, Widget};
 use glory_shoelace::widgets as sl;
 
-use super::PageInfo;
+use super::SharedInfo;
 use crate::models::Notification;
 
 #[derive(Debug, Clone)]
@@ -23,7 +23,7 @@ impl Widget for Topper {
     fn build(&mut self, ctx: &mut Scope) {
         let info = {
             let truck = ctx.truck();
-            truck.obtain::<PageInfo>().unwrap().clone()
+            truck.obtain::<SharedInfo>().unwrap().clone()
         };
 
         header().class("sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none")
@@ -153,7 +153,7 @@ impl Widget for NotificationCenter {
         sl::drawer().fill(
             h5().class("text-sm font-medium text-bodydark2").html("Notifications")).fill(
             ul().class("flex h-auto flex-col overflow-y-auto").fill(
-                li().fill(Each::new(Lotus::<Vec<Notification>>::from(self.notifications.clone()), |notification|{
+                li().fill(Each::from_vec(self.notifications.clone(), |notification|{
                     notification.id
                     }, |notification| {
                         li().fill(

@@ -17,6 +17,7 @@ salvo = { version = "0.58", default-features = true, optional = true, features =
 tokio = { version = "1", optional = true }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", optional = true }
+cfg-if = "1"
 
 [package.metadata.glory]
 # The name used by wasm-bindgen/glory-cli for the JS/WASM bundle. Defaults to the crate name

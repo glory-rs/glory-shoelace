@@ -6,14 +6,14 @@ use glory::routing::*;
 use glory::web::widgets::*;
 use glory::*;
 
-use super::PageInfo;
+use super::SharedInfo;
 
 #[derive(Debug, Clone)]
 pub struct Home;
 impl Widget for Home {
     fn attach(&mut self, ctx: &mut Scope) {
         let truck = ctx.truck();
-        let info = truck.obtain::<PageInfo>().unwrap();
+        let info = truck.obtain::<SharedInfo>().unwrap();
         info.title.revise(|mut v| *v = "Home page".to_owned());
         info.description
             .revise(|mut v| *v = "This is home page".to_owned());
