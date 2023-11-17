@@ -2,8 +2,6 @@
     h4,
     h1,
     h3 {
-        /* opacity: 0;
-        transition: opacity 1s ease; */
         display: none;
     }
 
@@ -15,6 +13,3 @@
         justify-content: center;
     }
 }
-/* .sidebar {
-    opacity: 1;
-} */

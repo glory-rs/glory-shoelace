@@ -57,7 +57,7 @@ pub struct SharedInfo {
     theme_name: Cage<String>,
     notifications: Cage<Vec<Notification>>,
 
-    sceen_size: Cage<ScreenSize>,
+    screen_size: Cage<ScreenSize>,
     sidebar_opened: Cage<bool>,
 }
 
@@ -68,7 +68,7 @@ impl Default for SharedInfo {
             description: Cage::new("Glory Admin".to_owned()),
             theme_name: Cage::new("light".to_owned()),
             notifications: Cage::new(vec![]),
-            sceen_size: Cage::new(ScreenSize::Xl),
+            screen_size: Cage::new(ScreenSize::Xl),
             sidebar_opened: Cage::new(true),
         }
     }

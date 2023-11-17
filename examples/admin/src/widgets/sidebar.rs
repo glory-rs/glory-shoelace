@@ -1,8 +1,6 @@
-use std::cell::RefCell;
-use std::rc::Rc;
-
 use glory::reflow::*;
 use glory::routing::*;
+
 use glory::web::events;
 use glory::web::widgets::*;
 use glory::widgets::*;
@@ -12,7 +10,7 @@ use glory_shoelace::widgets as sl;
 #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
 use glory::web::{closure::Closure, window, JsCast};
 
-use crate::widgets::SharedInfo;
+use crate::widgets::{ScreenSize, SharedInfo};
 
 #[derive(Eq, PartialEq, Hash, Clone, Debug)]
 pub struct LinkItem {
@@ -29,13 +27,11 @@ pub struct GroupItem {
 
 #[derive(Debug)]
 pub struct Sidebar {
-    opened: Cage<bool>,
     groups: Vec<GroupItem>,
 }
 impl Sidebar {
-    pub fn new(opened: Cage<bool>) -> Self {
+    pub fn new() -> Self {
         Self {
-            opened,
             groups: vec![GroupItem {
                 name: "Menu".to_owned(),
                 links: vec![
@@ -73,26 +69,35 @@ impl Widget for Sidebar {
             truck.obtain::<SharedInfo>().unwrap().clone()
         };
         let path = ctx.truck().obtain::<Locator>().unwrap().path();
-        cfg_if! {
-            if #[cfg(all(target_arch = "wasm32", feature = "web-csr"))] {
-                let resize = Box::new(|e| {
-                    info!("sreize");
-                }) as Box<dyn FnMut(web_sys::Event)>;
-                window().add_event_listener_with_callback(
-                    "resize".into(),
-                    Closure::wrap(resize).into_js_value().unchecked_ref(),
-                ).ok();
-            }
-        }
+
+        div()
+            .class("absolute top-0 left-0 z-9999 w-full h-full bg-black opacity-20")
+            .toggle_class("hidden", {
+                let info = info.clone();
+                Bond::new(move || {
+                    *info.screen_size.get() > ScreenSize::Sm || !*info.sidebar_opened.get()
+                })
+            })
+            .on(events::click, {
+                let sidebar_opened = info.sidebar_opened.clone();
+                move |_| sidebar_opened.revise(|mut v| *v = false)
+            })
+            .show_in(ctx);
 
         aside().class(
-            "sidebar fixed left-0 top-0 z-9999 flex flex-nowrap flex-col h-screen overflow-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static"
-        ).switch_class("w-72 opened", "w-18 closed", self.opened.clone())
+            "sidebar relative left-0 top-0 z-9999 flex flex-nowrap flex-col h-screen overflow-hidden bg-black duration-300 ease-linear dark:bg-boxdark"
+        ).switch_class("w-72 opened", {
+            let info = info.clone();
+            Bond::new(move||if *info.screen_size.get() <= ScreenSize::Sm {
+                "w-0 closed"
+            } else {
+                "w-18 closed"
+            })}, info.sidebar_opened.clone())
         .fill(
             a()//SIDEBAR HEADER
                 .class("flex flex-nowrap flex-row items-center justify-center gap-2 border-b border-gray-800 py-2")
-                .toggle_class("px-6", self.opened.clone()).href("/")
-                .fill(img().class("h-10 logo flex-none").toggle_class("pr-2", self.opened.clone()).src("/images/logos/glory.svg"))
+                .toggle_class("px-6", info.sidebar_opened.clone()).href("/")
+                .fill(img().class("h-10 logo flex-none").toggle_class("pr-2", info.sidebar_opened.clone()).src("/images/logos/glory.svg"))
                 .fill(
                     h1().class("text-lg font-bold truncate flex-none").html("Glory Admin")
                 )
@@ -100,8 +105,8 @@ impl Widget for Sidebar {
         .fill(
             nav()
                 .class("flex flex-col flex-nowrap grow overflow-x-hidden overflow-y-auto duration-300 ease-linear")
-                .fill(Each::from_vec(self.groups.clone(), |group|group.name.clone(), {
-                    let opened = self.opened.clone();
+                .fill(ul().fill(Each::from_vec(self.groups.clone(), |group|group.name.clone(), {
+                    let opened = info.sidebar_opened.clone();
                     move |group| {
                     li().switch_class("mt-5 px-4", "mt-3", opened.clone())
                     .fill(
@@ -109,15 +114,23 @@ impl Widget for Sidebar {
                             h3().class("mb-1 ml-4 text-sm font-medium").html("MENU")
                         ).fill(
                             Each::from_vec(group.links.clone(), |link|link.name.clone(), |link| {
-                                a().class("menu-item").attr("slot", "summary").href(link.url.clone()).fill(
-                                    sl::icon().name("speedometer").class("h-4.5 w-4.5 flex-none")
+                                a().class("menu-item").attr("slot", "summary").href(link.url.clone()).then(
+                                    |a| {
+                                        if let Some(icon) = link.icon.clone() {
+                                            a.fill(
+                                                sl::icon().name(icon).class("h-4.5 w-4.5 flex-none")
+                                            )
+                                        } else {
+                                            a
+                                        }
+                                    }
                                 ).fill(
-                                    h4().class("flex-none").html("Dashboard")
+                                    h4().class("shrink").html(link.name.clone())
                                 )
                             })
                         )
                     )
-                }}))
+                }})))
         ).show_in(ctx);
     }
 }

@@ -32,7 +32,7 @@
   }
   .sidebar {
     .menu-item {
-        @apply !relative !flex !items-center !gap-3 !p-3 !font-medium !duration-300 !ease-in-out hover:!bg-graydark dark:hover:!bg-meta-4;
+        @apply !relative !flex !items-center !gap-2 !p-3 !font-medium !duration-300 !ease-in-out hover:!bg-graydark dark:hover:!bg-meta-4;
     }
   }
 }

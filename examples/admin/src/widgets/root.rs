@@ -27,8 +27,16 @@ impl Widget for Root {
         cfg_if! {
             if #[cfg(all(target_arch = "wasm32", feature = "web-csr"))] {
                 let detect = |info: SharedInfo| {
-                    info!("sreize");
-                    info.clone().sceen_size.revise(|mut s|*s = ScreenSize::from(window().inner_width().unwrap().as_f64().unwrap()));
+                    let size = ScreenSize::from(window().inner_width().unwrap().as_f64().unwrap());
+                    if *info.screen_size.get() != size {
+                        glory::reflow::batch(move ||{
+                            let opened = size > ScreenSize::Lg;
+                            if opened != *info.sidebar_opened.get() {
+                                info.sidebar_opened.revise(|mut o|*o = opened);
+                            }
+                            info.screen_size.revise(|mut s|*s = size);
+                        })
+                    }
                 };
                 detect(info.clone());
                 let resize = Box::new({
@@ -61,7 +69,7 @@ impl Widget for Root {
         let path = ctx.truck().obtain::<Locator>().unwrap().path();
         div()
             .class("flex h-screen overflow-hidden")
-            .fill(Sidebar::new(info.sidebar_opened.clone()))
+            .fill(Sidebar::new())
             .fill(
                 div()
                     .class("relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden")

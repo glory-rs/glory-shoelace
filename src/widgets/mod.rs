@@ -34,7 +34,7 @@ macro_rules! widget_common_fns {
         #[track_caller]
         pub fn toggle_class<V, C>(self, value: V, cond: C) -> Self
         where
-            V: Into<String>,
+            V: ClassPart + 'static,
             C: Into<Lotus<bool>>,
         {
             self.switch_class(value, "", cond)
@@ -43,16 +43,19 @@ macro_rules! widget_common_fns {
         #[track_caller]
         pub fn switch_class<TV, FV, C>(mut self, tv: TV, fv: FV, cond: C) -> Self
         where
-            TV: Into<String>,
-            FV: Into<String>,
+            TV: ClassPart + 'static,
+            FV: ClassPart + 'static,
             C: Into<Lotus<bool>>,
         {
-            let tv = tv.into();
-            let fv = fv.into();
             let cond = cond.into();
-            self.inner.classes.part(Bond::new(
-                move || if *cond.get() { tv.clone() } else { fv.clone() },
-            ));
+            let part = Bond::new(move || {
+                if *cond.get() {
+                    tv.to_string()
+                } else {
+                    fv.to_string()
+                }
+            });
+            self.inner.classes.part(part);
             self
         }
 

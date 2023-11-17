@@ -1,15 +1,12 @@
-use std::cell::RefCell;
-use std::rc::Rc;
-
 use glory::reflow::*;
-use glory::routing::*;
+
 use glory::web::events;
 use glory::web::widgets::*;
 use glory::widgets::*;
 use glory::{Scope, Widget};
 use glory_shoelace::widgets as sl;
 
-use super::SharedInfo;
+use crate::widgets::{ScreenSize, SharedInfo};
 use crate::models::Notification;
 
 #[derive(Debug, Clone)]
@@ -35,15 +32,19 @@ impl Widget for Topper {
                     sl::button().size("medium").fill(
                         sl::icon().name("list").label("Menu")
                     ).on(events::click, {
-                        let info = info.clone();
+                        let sidebar_opened = info.sidebar_opened.clone();
                         move |_| {
-                            glory::info!("sidebar_is_open: {:?}", info.sidebar_opened);
-                            info.sidebar_opened.revise(|mut v| *v = !*v);
+                            sidebar_opened.revise(|mut v| *v = !*v);
+                            glory::info!("======================{}", *sidebar_opened.get());
                         }
                     })
                 ).fill(
-                    a().class("block flex-shrink-0 lg:hidden").href("/")
-                    .fill(img().class("h-8 w-8").src("/images/logos/glory.svg").alt("Glory"))
+                    a().class("block flex-shrink-0")
+                        .toggle_class("hidden", {
+                            let info = info.clone();
+                            Bond::new(move||*info.screen_size.get() > ScreenSize::Sm || *info.sidebar_opened.get())})
+                        .href("/")
+                        .fill(img().class("h-8 w-8").src("/images/logos/glory.svg").alt("Glory"))
                 )
             ).fill(
                 div().class("hidden sm:block")

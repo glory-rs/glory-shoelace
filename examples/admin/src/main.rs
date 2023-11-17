@@ -1,8 +1,8 @@
 #[macro_use]
 extern crate cfg_if;
 
-mod widgets;
 pub mod models;
+mod widgets;
 
 #[cfg(feature = "web-ssr")]
 #[tokio::main]
@@ -11,9 +11,9 @@ async fn main() {
 
     use glory::routing::aviators::*;
     use glory::web::holders::*;
+    use glory::Holder;
     use salvo::catcher::Catcher;
     use salvo::prelude::*;
-    use glory::Holder;
 
     use widgets::*;
 
