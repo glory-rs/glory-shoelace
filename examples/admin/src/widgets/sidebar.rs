@@ -95,7 +95,7 @@ impl Widget for Sidebar {
             .show_in(ctx);
 
         aside().class(
-            "sidebar relative left-0 top-0 flex flex-nowrap flex-col h-screen overflow-hidden bg-black duration-300 ease-linear dark:bg-boxdark"
+            "sidebar relative left-0 top-0 z-9999 flex flex-nowrap flex-col h-screen overflow-hidden bg-black duration-300 ease-linear dark:bg-boxdark"
         ).class({
             let info = info.clone();
             Bond::new(move||{
