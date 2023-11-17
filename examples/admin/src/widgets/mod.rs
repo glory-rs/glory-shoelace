@@ -5,7 +5,7 @@ use sidebar::Sidebar;
 mod home;
 use home::Home;
 mod topper;
-use topper::Topper;
+use topper::{Topper, NotificationCenter};
 
 mod calendar;
 use calendar::Calendar;
@@ -77,6 +77,7 @@ pub struct SharedInfo {
 
     screen_size: Cage<ScreenSize>,
     sidebar_opened: Cage<bool>,
+    notification_opened: Cage<bool>,
 }
 
 impl Default for SharedInfo {
@@ -85,9 +86,47 @@ impl Default for SharedInfo {
             title: Cage::new("Glory Admin".to_owned()),
             description: Cage::new("Glory Admin".to_owned()),
             theme_name: Cage::new("light".to_owned()),
-            notifications: Cage::new(vec![]),
+            notifications: Cage::new(vec![
+                Notification {
+                    brief: "A new user registered on your app. Check it out!".to_owned(),
+                    id: 123,
+                    crated_at: "Just now".to_owned(),
+                    is_read: Cage::new(true),
+                },
+                Notification {
+                    brief: "A new user registered on your app. Check it out!".to_owned(),
+                    id: 5,
+                    crated_at: "Just now".to_owned(),
+                    is_read: Cage::new(false),
+                },
+                Notification {
+                    brief: "New user registered".to_owned(),
+                    id: 4,
+                    crated_at: "Just now".to_owned(),
+                    is_read: Cage::new(true),
+                },
+                Notification {
+                    brief: "A new user registered on your app. Check it out!".to_owned(),
+                    id: 3,
+                    crated_at: "Just now".to_owned(),
+                    is_read: Cage::new(false),
+                },
+                Notification {
+                    brief: "New user registered".to_owned(),
+                    id: 2,
+                    crated_at: "Just now".to_owned(),
+                    is_read: Cage::new(false),
+                },
+                Notification {
+                    brief: "A new user registered on your app. Check it out!".to_owned(),
+                    id: 1,
+                    crated_at: "Just now".to_owned(),
+                    is_read: Cage::new(true),
+                },
+            ]),
             screen_size: Cage::new(ScreenSize::Xl),
             sidebar_opened: Cage::new(true),
+            notification_opened: Cage::new(false),
         }
     }
 }

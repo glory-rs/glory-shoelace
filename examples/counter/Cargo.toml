@@ -4,7 +4,8 @@ version = "0.0.1"
 edition = "2021"
 
 [dependencies]
-glory = { path = "../../../glory/crates/glory", default-features = false, features = ["web-csr"] }
+# glory = { path = "../../../glory/crates/glory", default-features = false, features = ["web-csr"] }
+glory = { version = "0.3", default-features = false, features = ["web-csr"] }
 glory-shoelace = { path = "../../", default-features = false, features = ["web-csr"] }
 wasm-bindgen = { version = "0.2", features = ["enable-interning"] }
 wasm-bindgen-futures = "0.4.31"

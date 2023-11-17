@@ -6,8 +6,8 @@ use glory::widgets::*;
 use glory::{Scope, Widget};
 use glory_shoelace::widgets as sl;
 
-use crate::widgets::{ScreenSize, SharedInfo};
 use crate::models::Notification;
+use crate::widgets::{ScreenSize, SharedInfo};
 
 #[derive(Debug, Clone)]
 pub struct Topper;
@@ -68,9 +68,25 @@ impl Widget for Topper {
                     .fill(
                         li().fill(ThemeSwitch::new(info.theme_name.clone()))
                     ).fill(
-                        li().fill(
-                            NotificationCenter::new(info.notifications.clone())
-                        )
+                        li().class("relative flex h-8.5 w-8.5 items-center justify-center")
+                        .fill(
+                            sl::button()
+                                .size("medium")
+                                .circle(true)
+                                .fill(sl::icon().name("bell"))
+                        ).fill(
+                            span()
+                                .class("absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1")
+                                .toggle_class(
+                                    "hidden",
+                                    info.notifications.map(|n| n.iter().all(|i| *i.is_read.get())),
+                                ),
+                        ).on(events::click, {
+                                let notification_opened = info.notification_opened.clone();
+                                move |_| {
+                                    notification_opened.revise(|mut v| *v = !*v);
+                                }
+                            })
                     ).fill(
                         li().fill(
                             UserCenter::new()
@@ -123,39 +139,31 @@ impl Widget for ThemeSwitch {
 }
 
 #[derive(Debug, Clone)]
-struct NotificationCenter {
-    notifications: Cage<Vec<Notification>>,
+pub struct NotificationCenter {
 }
 impl NotificationCenter {
-    pub fn new(notifications: Cage<Vec<Notification>>) -> Self {
-        Self { notifications }
+    pub fn new() -> Self {
+        Self {  }
     }
 }
 
 impl Widget for NotificationCenter {
     fn build(&mut self, ctx: &mut Scope) {
-        a().class("relative flex h-8.5 w-8.5 items-center justify-center")
-            .href("#")
-            .fill(
-                sl::button()
-                    .size("medium")
-                    .circle(true)
-                    .fill(sl::icon().name("bell")),
-            )
-            .fill(
-                span()
-                    .class("absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1")
-                    .toggle_class(
-                        "hidden",
-                        self.notifications.map(|n| n.iter().any(|i| !i.is_read)),
-                    ),
-            )
-            .show_in(ctx);
+        let info = {
+            let truck = ctx.truck();
+            truck.obtain::<SharedInfo>().unwrap().clone()
+        };
 
-        sl::drawer().fill(
+        sl::drawer().open(info.notification_opened.clone()).on(events::Custom::<web_sys::Event>::new("sl-request-close"), {
+            let info = info.clone();
+            move |e| {
+                e.prevent_default();
+                info.notification_opened.revise(|mut v| *v = false);
+            }
+        }).fill(
             h5().class("text-sm font-medium text-bodydark2").html("Notifications")).fill(
             ul().class("flex h-auto flex-col overflow-y-auto").fill(
-                li().fill(Each::from_vec(self.notifications.clone(), |notification|{
+                li().fill(Each::from_vec(info.notifications.clone(), |notification|{
                     notification.id
                     }, |notification| {
                         li().fill(

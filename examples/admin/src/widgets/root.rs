@@ -6,9 +6,11 @@ use glory::routing::*;
 use glory::web::widgets::*;
 #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
 use glory::web::{closure::Closure, window, JsCast};
+use glory::widgets::Each;
 use glory::*;
+use glory_shoelace::widgets as sl;
 
-use super::{ScreenSize, SharedInfo, Sidebar, Topper};
+use super::{ScreenSize, SharedInfo, Sidebar, NotificationCenter, Topper};
 
 #[derive(Debug)]
 pub struct Root {}
@@ -76,6 +78,7 @@ impl Widget for Root {
                     .fill(Topper::new())
                     .fill(main().fill(Graff::new("section"))),
             )
+            .fill(NotificationCenter::new())
             .show_in(ctx);
     }
 }
