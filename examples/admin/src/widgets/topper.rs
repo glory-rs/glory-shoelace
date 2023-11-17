@@ -139,11 +139,10 @@ impl Widget for ThemeSwitch {
 }
 
 #[derive(Debug, Clone)]
-pub struct NotificationCenter {
-}
+pub struct NotificationCenter {}
 impl NotificationCenter {
     pub fn new() -> Self {
-        Self {  }
+        Self {}
     }
 }
 
@@ -162,8 +161,7 @@ impl Widget for NotificationCenter {
             }
         }).fill(
             h5().class("text-sm font-medium text-bodydark2").html("Notifications")).fill(
-            ul().class("flex h-auto flex-col overflow-y-auto").fill(
-                li().fill(Each::from_vec(info.notifications.clone(), |notification|{
+            ul().class("flex h-auto flex-col overflow-y-auto").fill(Each::from_vec(info.notifications.clone(), |notification|{
                     notification.id
                     }, |notification| {
                         li().fill(
@@ -175,7 +173,6 @@ impl Widget for NotificationCenter {
                             )
                         )
                     })
-                )
             )
         ).show_in(ctx);
     }

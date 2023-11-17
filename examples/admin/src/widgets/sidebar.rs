@@ -38,7 +38,7 @@ impl Sidebar {
                     LinkItem {
                         icon: Some("speedometer".to_owned()),
                         name: "Dashboard".to_owned(),
-                        url: "/".to_owned(),
+                        url: "/dashboard".to_owned(),
                     },
                     LinkItem {
                         icon: Some("calendar".to_owned()),
