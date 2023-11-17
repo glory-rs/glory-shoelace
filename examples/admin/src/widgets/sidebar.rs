@@ -86,13 +86,18 @@ impl Widget for Sidebar {
 
         aside().class(
             "sidebar relative left-0 top-0 z-9999 flex flex-nowrap flex-col h-screen overflow-hidden bg-black duration-300 ease-linear dark:bg-boxdark"
-        ).switch_class("w-72 opened", {
+        ).class({
             let info = info.clone();
-            Bond::new(move||if *info.screen_size.get() <= ScreenSize::Sm {
-                "w-0 closed"
-            } else {
-                "w-18 closed"
-            })}, info.sidebar_opened.clone())
+            Bond::new(move||{
+                glory::info!("VVVVVVVVVVVVVVVVVVVVVVVVV   {}", *info.sidebar_opened.get());
+                if !*info.sidebar_opened.get() {
+                    "w-72 opened"
+                } else if *info.screen_size.get() <= ScreenSize::Sm {
+                    "w-0 closed"
+                } else {
+                    "w-18 closed"
+                }
+        })})
         .fill(
             a()//SIDEBAR HEADER
                 .class("flex flex-nowrap flex-row items-center justify-center gap-2 border-b border-gray-800 py-2")
