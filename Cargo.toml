@@ -16,15 +16,15 @@ license = "MIT OR Apache-2.0"
 categories = ["web-programming"]
 
 [features]
-default = ["web-csr"]
-web-csr = ["__single_holder", "dep:wasm-bindgen"]
-web-ssr = []
-__single_holder = []
+default = []
+web-csr = ["__single_holder", "dep:wasm-bindgen", "glory-core/web-csr"]
+web-ssr = ["glory-core/web-ssr"]
+__single_holder = ["glory-core/__single_holder"]
 
 [dependencies]
 web-sys = { version = "0.3", features = ["Element", "HtmlElement"] }
 wasm-bindgen = { version = "0.2.88", optional = true }
-glory-core = { version = "0.2.0", path = "../glory/crates/core" }
+glory-core = { version = "0.2.0", path = "../glory/crates/core", default-features = false }
 
 [package.metadata.cargo-all-features]
 denylist = ["stable"]

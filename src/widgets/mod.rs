@@ -34,7 +34,7 @@ macro_rules! widget_common_fns {
         #[track_caller]
         pub fn toggle_class<V, C>(self, value: V, cond: C) -> Self
         where
-            V: Into<String>,
+            V: ClassPart + 'static,
             C: Into<Lotus<bool>>,
         {
             self.switch_class(value, "", cond)
@@ -43,16 +43,19 @@ macro_rules! widget_common_fns {
         #[track_caller]
         pub fn switch_class<TV, FV, C>(mut self, tv: TV, fv: FV, cond: C) -> Self
         where
-            TV: Into<String>,
-            FV: Into<String>,
+            TV: ClassPart + 'static,
+            FV: ClassPart + 'static,
             C: Into<Lotus<bool>>,
         {
-            let tv = tv.into();
-            let fv = fv.into();
             let cond = cond.into();
-            self.inner.classes.part(Bond::new(
-                move || if *cond.get() { tv.clone() } else { fv.clone() },
-            ));
+            let part = Bond::new(move || {
+                if *cond.get() {
+                    tv.to_string()
+                } else {
+                    fv.to_string()
+                }
+            });
+            self.inner.classes.part(part);
             self
         }
 
@@ -78,13 +81,12 @@ macro_rules! widget_common_fns {
 
         /// Adds an event listener to this element.
         #[track_caller]
-        pub fn on<E: EventDescriptor>(
-            self,
-            event: E,
-            #[allow(unused_mut)] // used for tracing in debug
-            mut event_handler: impl FnMut(E::EventType) + 'static,
-        ) -> Self {
-            self.inner.add_event_listener(event, event_handler);
+        pub fn on<E, H>(#[allow(unused_mut)] mut self, event: E, handler: H) -> Self
+        where
+            E: EventDescriptor + 'static,
+            H: FnMut(E::EventType) + 'static,
+        {
+            self.inner.add_event_listener(event, handler);
             self
         }
 
@@ -204,6 +206,8 @@ macro_rules! define_widget {
             fn flood(&mut self, ctx: &mut Scope) {
                 self.inner.flood(ctx);
             }
+            #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
+            fn hydrate(&mut self, ctx: &mut Scope) {self.inner.hydrate(ctx);}
             fn build(&mut self, ctx: &mut Scope) {
                 self.inner.build(ctx);
             }

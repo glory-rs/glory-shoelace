@@ -1,0 +1,15 @@
+.sidebar.closed {
+    h4,
+    h1,
+    h3 {
+        display: none;
+    }
+
+    img.logo {
+        max-width: none;
+    }
+
+    .menu-item {
+        justify-content: center;
+    }
+}
