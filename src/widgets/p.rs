@@ -7,8 +7,6 @@ use glory_core::web::Element;
 use glory_core::web::{AttrValue, ClassPart, PropValue};
 use glory_core::IntoFiller;
 use glory_core::{NodeRef, Scope, Widget};
-#[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
-use wasm_bindgen::{JsCast, UnwrapThrowExt};
 
 define_widget!(
     /// Popup is a utility that lets you declaratively anchor “popup” containers to another element.

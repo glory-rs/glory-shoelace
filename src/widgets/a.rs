@@ -7,8 +7,6 @@ use glory_core::web::Element;
 use glory_core::web::{AttrValue, ClassPart, PropValue};
 use glory_core::IntoFiller;
 use glory_core::{NodeRef, Scope, Widget};
-#[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
-use wasm_bindgen::{JsCast, UnwrapThrowExt};
 
 define_widget!(
     /// Alerts are used to display important messages inline or as toast notifications.

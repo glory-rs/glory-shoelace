@@ -6,7 +6,6 @@ use glory::widgets::*;
 use glory::{Scope, Widget};
 use glory_shoelace::widgets as sl;
 
-use crate::models::Notification;
 use crate::widgets::{ScreenSize, SharedInfo};
 
 #[derive(Debug, Clone)]

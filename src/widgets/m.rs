@@ -2,8 +2,6 @@ use std::borrow::Cow;
 use std::ops::{Deref, DerefMut};
 
 use glory_core::web::Element;
-#[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
-use wasm_bindgen::{JsCast, UnwrapThrowExt};
 
 use glory_core::reflow::{Bond, Lotus};
 use glory_core::web::events::EventDescriptor;

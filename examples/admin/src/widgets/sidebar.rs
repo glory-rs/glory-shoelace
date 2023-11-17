@@ -7,9 +7,6 @@ use glory::widgets::*;
 use glory::*;
 use glory_shoelace::widgets as sl;
 
-#[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
-use glory::web::{closure::Closure, window, JsCast};
-
 use crate::widgets::{ScreenSize, SharedInfo};
 
 #[derive(Eq, PartialEq, Hash, Clone, Debug)]

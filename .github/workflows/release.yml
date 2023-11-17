@@ -45,7 +45,7 @@ jobs:
       matrix:
         package:
           - crate: glory-shoelace
-            path: ./glory-shoelace
+            path: ./
     steps:
       - uses: dtolnay/rust-toolchain@stable
         with:

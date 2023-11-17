@@ -1,16 +1,12 @@
-use std::cell::RefCell;
-use std::rc::Rc;
-
-use glory::reflow::*;
 use glory::routing::*;
 use glory::web::widgets::*;
 #[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
 use glory::web::{closure::Closure, window, JsCast};
-use glory::widgets::Each;
 use glory::*;
-use glory_shoelace::widgets as sl;
 
-use super::{ScreenSize, SharedInfo, Sidebar, NotificationCenter, Topper};
+use super::{NotificationCenter, SharedInfo, Sidebar, Topper};
+#[cfg(all(target_arch = "wasm32", feature = "web-csr"))]
+use super::ScreenSize;
 
 #[derive(Debug)]
 pub struct Root {}
@@ -68,7 +64,6 @@ impl Widget for Root {
             )
             .show_in(ctx);
 
-        let path = ctx.truck().obtain::<Locator>().unwrap().path();
         div()
             .class("flex h-screen overflow-hidden")
             .fill(Sidebar::new())
