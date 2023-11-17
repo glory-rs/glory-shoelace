@@ -7,6 +7,24 @@ use home::Home;
 mod topper;
 use topper::Topper;
 
+mod calendar;
+use calendar::Calendar;
+
+mod dashboard;
+use dashboard::Dashboard;
+
+mod gallery;
+use gallery::Gallery;
+
+mod mailbox;
+use mailbox::Mailbox;
+
+mod profile;
+use profile::Profile;
+
+mod settings;
+use settings::Settings;
+
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -95,7 +113,31 @@ impl Widget for NoMatch {
 
 pub fn route() -> Router {
     Router::new()
-        // .push(Router::with_path("dashboard").goal(|tk: Rc<RefCell<Truck>>| tk.insert_stuff("section", Dashboard)))
+        .push(
+            Router::with_path("dashboard")
+                .goal(|tk: Rc<RefCell<Truck>>| tk.insert_stuff("section", Dashboard)),
+        )
+        .push(
+            Router::with_path("calendar")
+                .goal(|tk: Rc<RefCell<Truck>>| tk.insert_stuff("section", Calendar)),
+        )
+        .push(
+            Router::with_path("gallery")
+                .goal(|tk: Rc<RefCell<Truck>>| tk.insert_stuff("section", 
+                Gallery)),
+        )
+        .push(
+            Router::with_path("profile")
+                .goal(|tk: Rc<RefCell<Truck>>| tk.insert_stuff("section", Profile)),
+        )
+        .push(
+            Router::with_path("mailbox")
+                .goal(|tk: Rc<RefCell<Truck>>| tk.insert_stuff("section", Mailbox)),
+        )
+        .push(
+            Router::with_path("settings")
+                .goal(|tk: Rc<RefCell<Truck>>| tk.insert_stuff("section", Settings)),
+        )
         .goal(|tk: Rc<RefCell<Truck>>| tk.insert_stuff("section", Home))
 }
 

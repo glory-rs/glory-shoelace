@@ -51,7 +51,7 @@ impl Widget for Root {
             }
         }
 
-        head_mixin()
+        head_mixin().fill(title().text(info.title.map(|t| format!("{} | Glory Admin", t))))
             .fill(link().rel("stylesheet").href("pkg/glory-admin.css")) 
             .fill(link().rel("stylesheet").href("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/themes/light.css"))
             .fill(link().rel("stylesheet").href("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/themes/dark.css"))

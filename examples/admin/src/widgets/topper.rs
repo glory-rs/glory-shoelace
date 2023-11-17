@@ -35,7 +35,6 @@ impl Widget for Topper {
                         let sidebar_opened = info.sidebar_opened.clone();
                         move |_| {
                             sidebar_opened.revise(|mut v| *v = !*v);
-                            glory::info!("======================{}", *sidebar_opened.get());
                         }
                     })
                 ).fill(
@@ -47,7 +46,9 @@ impl Widget for Topper {
                         .fill(img().class("h-8 w-8").src("/images/logos/glory.svg").alt("Glory"))
                 )
             ).fill(
-                div().class("hidden sm:block")
+                div().class("grow px-4 hidden sm:block").fill(
+                    h3().class("text-lg").html(info.title.clone())
+                )
             ).fill(
                 div().class("flex items-center gap-2 2xsm:gap-7").fill(
                     form().action("/").method("POST")

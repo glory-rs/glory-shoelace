@@ -46,6 +46,16 @@ impl Sidebar {
                         url: "/calendar".to_owned(),
                     },
                     LinkItem {
+                        icon: Some("fan".to_owned()),
+                        name: "Gallery".to_owned(),
+                        url: "/gallery".to_owned(),
+                    },
+                    LinkItem {
+                        icon: Some("envelope".to_owned()),
+                        name: "Mailbox".to_owned(),
+                        url: "/mailbox".to_owned(),
+                    },
+                    LinkItem {
                         icon: Some("person".to_owned()),
                         name: "Profile".to_owned(),
                         url: "/profile".to_owned(),
@@ -89,8 +99,7 @@ impl Widget for Sidebar {
         ).class({
             let info = info.clone();
             Bond::new(move||{
-                glory::info!("VVVVVVVVVVVVVVVVVVVVVVVVV   {}", *info.sidebar_opened.get());
-                if !*info.sidebar_opened.get() {
+                if *info.sidebar_opened.get() {
                     "w-72 opened"
                 } else if *info.screen_size.get() <= ScreenSize::Sm {
                     "w-0 closed"
@@ -123,7 +132,7 @@ impl Widget for Sidebar {
                                     |a| {
                                         if let Some(icon) = link.icon.clone() {
                                             a.fill(
-                                                sl::icon().name(icon).class("h-4.5 w-4.5 flex-none")
+                                                sl::icon().name(icon).class("h-5 w-5 flex-none")
                                             )
                                         } else {
                                             a
