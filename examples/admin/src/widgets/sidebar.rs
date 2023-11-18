@@ -97,7 +97,7 @@ impl Widget for Sidebar {
             let info = info.clone();
             Bond::new(move||{
                 if *info.sidebar_opened.get() {
-                    "w-72 opened"
+                    "w-60 opened"
                 } else if *info.screen_size.get() <= ScreenSize::Sm {
                     "w-0 closed"
                 } else {
@@ -106,16 +106,16 @@ impl Widget for Sidebar {
         })})
         .fill(
             a()//SIDEBAR HEADER
-                .class("flex flex-nowrap flex-row items-center justify-center gap-2 border-b border-gray-800 py-2")
+                .class("flex flex-nowrap flex-row items-center justify-center gap-2 border-b border-gray-800 py-2 h-14")
                 .toggle_class("px-6", info.sidebar_opened.clone()).href("/")
-                .fill(img().class("h-10 logo flex-none").toggle_class("pr-2", info.sidebar_opened.clone()).src("/images/logos/glory.svg"))
+                .fill(img().class("h-8 logo flex-none").toggle_class("pr-2", info.sidebar_opened.clone()).src("/images/logos/glory.svg"))
                 .fill(
                     h1().class("text-lg font-bold truncate flex-none").html("Glory Admin")
                 )
         )
         .fill(
             nav()
-                .class("flex flex-col flex-nowrap grow overflow-x-hidden overflow-y-auto duration-300 ease-linear")
+                .class("flex flex-col flex-nowrap grow h-14 overflow-x-hidden overflow-y-auto duration-300 ease-linear")
                 .fill(ul().fill(Each::from_vec(self.groups.clone(), |group|group.name.clone(), {
                     let opened = info.sidebar_opened.clone();
                     move |group| {
@@ -129,7 +129,7 @@ impl Widget for Sidebar {
                                     |a| {
                                         if let Some(icon) = link.icon.clone() {
                                             a.fill(
-                                                sl::icon().name(icon).class("h-5 w-5 flex-none")
+                                                sl::icon().name(icon).class("text-xl flex-none")
                                             )
                                         } else {
                                             a
