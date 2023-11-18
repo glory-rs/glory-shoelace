@@ -124,9 +124,15 @@ impl Widget for Sidebar {
                         div().fill(
                             h3().class("mb-1 ml-4 text-sm font-medium").html("MENU")
                         ).fill(
-                            Each::from_vec(group.links.clone(), |link|link.name.clone(), |link| {
-                                a().class("menu-item").attr("slot", "summary").href(link.url.clone()).then(
-                                    |a| {
+                            Each::from_vec(group.links.clone(), |link|link.name.clone(), {
+                                let path = path.clone();
+                                move |link| {
+                                a().class("menu-item")
+                                .toggle_class("bg-black-2", path.map({
+                                    let url = link.url.clone();
+                                    move|p|p.starts_with(&url)}))
+                                .attr("slot", "summary").href(link.url.clone()).then(
+                                    move |a| {
                                         if let Some(icon) = link.icon.clone() {
                                             a.fill(
                                                 sl::icon().name(icon).class("text-xl flex-none")
@@ -138,7 +144,7 @@ impl Widget for Sidebar {
                                 ).fill(
                                     h4().class("shrink").html(link.name.clone())
                                 )
-                            })
+                            }})
                         )
                     )
                 }})))
