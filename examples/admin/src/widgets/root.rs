@@ -57,6 +57,8 @@ impl Widget for Root {
                 script().type_("module").src("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/shoelace-autoloader.js")
             )
             .show_in(ctx);
+        html_meta().attr("data-theme", info.theme_name.clone())
+            .show_in(ctx);
         body_meta()
             .toggle_class(
                 "dark text-bodydark bg-boxdark-2 sl-theme-dark",
@@ -71,7 +73,7 @@ impl Widget for Root {
                 div()
                     .class("relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden")
                     .fill(Topper::new())
-                    .fill(main().fill(Graff::new("section"))),
+                    .fill(main().class("flex-1 overflow-y-auto pt-8 px-6 bg-base-200").fill(Graff::new("section"))),
             )
             .fill(NotificationCenter::new())
             .show_in(ctx);

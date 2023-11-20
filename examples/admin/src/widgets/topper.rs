@@ -22,7 +22,7 @@ impl Widget for Topper {
             truck.obtain::<SharedInfo>().unwrap().clone()
         };
 
-        header().class("sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none")
+        header().class("sticky top-0 z-999 flex w-full bg-base-100 shadow-md")
         .fill(
             div().class("flex flex-grow items-center justify-between py-1 px-4 shadow-2")
             .fill(
