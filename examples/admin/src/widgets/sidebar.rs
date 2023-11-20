@@ -115,7 +115,7 @@ impl Widget for Sidebar {
         )
         .fill(
             nav()
-                .class("flex flex-col flex-nowrap grow overflow-y-auto h-14 text-bodydark1 duration-300 ease-in-out")
+                .class("flex flex-col flex-nowrap grow overflow-x-hidden overflow-y-auto h-14 text-bodydark1 duration-300 ease-in-out")
                 .fill(ul().class("menu bg-base-100 w-full px-1 text-base-content").fill(Each::from_vec(self.groups.clone(), |group|group.name.clone(), {
                     let opened = info.sidebar_opened.clone();
                     move |group| {
