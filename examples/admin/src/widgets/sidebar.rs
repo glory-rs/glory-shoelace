@@ -78,7 +78,7 @@ impl Widget for Sidebar {
         let path = ctx.truck().obtain::<Locator>().unwrap().path();
 
         div()
-            .class("absolute top-0 left-0 z-9999 w-full h-full bg-black opacity-20")
+            .class("absolute top-0 left-0 z-9999 w-full h-full opacity-20")
             .toggle_class("hidden", {
                 let info = info.clone();
                 Bond::new(move || {
@@ -92,7 +92,7 @@ impl Widget for Sidebar {
             .show_in(ctx);
 
         aside().class(
-            "sidebar relative left-0 top-0 z-9999 flex flex-nowrap flex-col h-screen overflow-hidden bg-black duration-300 ease-linear dark:bg-boxdark"
+            "sidebar relative left-0 top-0 z-9999 flex flex-nowrap flex-col h-screen overflow-hidden duration-300 ease-linear dark:bg-boxdark"
         ).class({
             let info = info.clone();
             Bond::new(move||{
@@ -101,12 +101,12 @@ impl Widget for Sidebar {
                 } else if *info.screen_size.get() <= ScreenSize::Sm {
                     "w-0 closed"
                 } else {
-                    "w-18 closed"
+                    "w-16 closed"
                 }
         })})
         .fill(
             a()//SIDEBAR HEADER
-                .class("flex flex-nowrap flex-row items-center justify-center gap-2 border-b border-gray-800 py-2 h-14")
+                .class("flex flex-nowrap flex-row items-center justify-center gap-2 py-2 h-14")
                 .toggle_class("px-6", info.sidebar_opened.clone()).href("/")
                 .fill(img().class("h-8 logo flex-none").toggle_class("pr-2", info.sidebar_opened.clone()).src("/images/logos/glory.svg"))
                 .fill(
@@ -115,23 +115,22 @@ impl Widget for Sidebar {
         )
         .fill(
             nav()
-                .class("flex flex-col flex-nowrap grow h-14 overflow-x-hidden overflow-y-auto duration-300 ease-linear")
-                .fill(ul().fill(Each::from_vec(self.groups.clone(), |group|group.name.clone(), {
+                .class("flex flex-col flex-nowrap grow h-14 text-bodydark1 overflow-x-hidden overflow-y-auto duration-300 ease-in-out")
+                .fill(ul().class("menu bg-base-100 w-full text-base-content").fill(Each::from_vec(self.groups.clone(), |group|group.name.clone(), {
                     let opened = info.sidebar_opened.clone();
                     move |group| {
-                    li().switch_class("mt-5 px-4", "mt-3", opened.clone())
+                    li().switch_class("mt-5", "mt-3", opened.clone())
                     .fill(
-                        div().fill(
-                            h3().class("mb-1 ml-4 text-sm font-medium").html("MENU")
-                        ).fill(
-                            Each::from_vec(group.links.clone(), |link|link.name.clone(), {
-                                let path = path.clone();
-                                move |link| {
-                                a().class("menu-item")
-                                .toggle_class("bg-black-2", path.map({
-                                    let url = link.url.clone();
-                                    move|p|p.starts_with(&url)}))
-                                .attr("slot", "summary").href(link.url.clone()).then(
+                        li().class("menu-title").html("MENU")
+                    ).fill(
+                        Each::from_vec(group.links.clone(), |link|link.name.clone(), {
+                            let path = path.clone();
+                            move |link| {
+                            li().class("menu-item flex flex-row px-0 py-0").toggle_class("font-semibold bg-base-200", path.map({
+                                let url = link.url.clone();
+                                move|p|p.starts_with(&url)})).fill(
+                                a().class("flex grow py-4")
+                                .href(link.url.clone()).then(
                                     move |a| {
                                         if let Some(icon) = link.icon.clone() {
                                             a.fill(
@@ -142,10 +141,10 @@ impl Widget for Sidebar {
                                         }
                                     }
                                 ).fill(
-                                    h4().class("shrink").html(link.name.clone())
+                                    span().class("shrink grow").html(link.name.clone())
                                 )
-                            }})
-                        )
+                            )
+                        }})
                     )
                 }})))
         ).show_in(ctx);
