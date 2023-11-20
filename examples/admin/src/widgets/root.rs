@@ -67,7 +67,7 @@ impl Widget for Root {
             .show_in(ctx);
 
         div()
-            .class("flex h-screen overflow-hidden")
+            .class("flex h-screen")
             .fill(Sidebar::new())
             .fill(
                 div()

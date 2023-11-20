@@ -78,7 +78,7 @@ impl Widget for Sidebar {
         let path = ctx.truck().obtain::<Locator>().unwrap().path();
 
         div()
-            .class("absolute top-0 left-0 z-9999 w-full h-full opacity-20")
+            .class("fixed top-0 left-0 z-50 bg-neutral w-full h-full opacity-10")
             .toggle_class("hidden", {
                 let info = info.clone();
                 Bond::new(move || {
@@ -92,7 +92,7 @@ impl Widget for Sidebar {
             .show_in(ctx);
 
         aside().class(
-            "sidebar relative left-0 top-0 z-9999 flex flex-nowrap flex-col h-screen overflow-hidden duration-300 ease-linear dark:bg-boxdark"
+            "sidebar relative left-0 top-0 z-50 flex flex-nowrap flex-col h-screen bg-base-100 duration-300 ease-linear dark:bg-boxdark"
         ).class({
             let info = info.clone();
             Bond::new(move||{
@@ -115,8 +115,8 @@ impl Widget for Sidebar {
         )
         .fill(
             nav()
-                .class("flex flex-col flex-nowrap grow h-14 text-bodydark1 overflow-x-hidden overflow-y-auto duration-300 ease-in-out")
-                .fill(ul().class("menu bg-base-100 w-full text-base-content").fill(Each::from_vec(self.groups.clone(), |group|group.name.clone(), {
+                .class("flex flex-col flex-nowrap grow overflow-y-auto h-14 text-bodydark1 duration-300 ease-in-out")
+                .fill(ul().class("menu bg-base-100 w-full px-1 text-base-content").fill(Each::from_vec(self.groups.clone(), |group|group.name.clone(), {
                     let opened = info.sidebar_opened.clone();
                     move |group| {
                     li().switch_class("mt-5", "mt-3", opened.clone())
@@ -126,24 +126,17 @@ impl Widget for Sidebar {
                         Each::from_vec(group.links.clone(), |link|link.name.clone(), {
                             let path = path.clone();
                             move |link| {
-                            li().class("menu-item flex flex-row px-0 py-0").toggle_class("font-semibold bg-base-200", path.map({
+                                li().class("menu-item flex flex-row px-0 py-0").attr("data-tip", link.name.clone())                                    
+                                    .toggle_class("font-semibold bg-base-200", path.map({
                                 let url = link.url.clone();
                                 move|p|p.starts_with(&url)})).fill(
-                                a().class("flex grow py-4")
-                                .href(link.url.clone()).then(
-                                    move |a| {
-                                        if let Some(icon) = link.icon.clone() {
-                                            a.fill(
-                                                sl::icon().name(icon).class("text-xl flex-none")
-                                            )
-                                        } else {
-                                            a
-                                        }
-                                    }
-                                ).fill(
-                                    span().class("shrink grow").html(link.name.clone())
+                                    a().class("flex items-center justify-center grow py-4")
+                                        .href(link.url.clone()).fill(
+                                            sl::icon().name(link.icon.clone().unwrap_or("circle".into())).class("text-xl flex-none")
+                                        ).fill(
+                                        span().class("shrink grow").html(link.name.clone())
+                                    )
                                 )
-                            )
                         }})
                     )
                 }})))

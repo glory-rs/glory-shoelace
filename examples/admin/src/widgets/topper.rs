@@ -158,8 +158,7 @@ impl Widget for NotificationCenter {
                 e.prevent_default();
                 info.notification_opened.revise(|mut v| *v = false);
             }
-        }).fill(
-            h5().class("text-sm font-medium text-bodydark2").html("Notifications")).fill(
+        }).label("Notifications").fill(
             ul().class("flex h-auto flex-col overflow-y-auto").fill(Each::from_vec(info.notifications.clone(), |notification|{
                     notification.id
                     }, |notification| {
