@@ -9,12 +9,12 @@ web-ssr = ["glory/salvo", "glory-shoelace/web-ssr", "dep:tokio", "dep:salvo", "d
 
 [dependencies]
 # glory = { path = "../../../glory/crates/glory", default-features = false, features = ["routing"] }
-glory = { version = "0.3", default-features = false, features = ["routing"] }
+glory = { version = "0.3.1", default-features = false, features = ["routing"] }
 glory-shoelace = { path = "../../", default-features = false }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 web-sys = { version = "0.3", features = ["Storage"] }
-salvo = { version = "0.58", default-features = true, optional = true, features = ["serve-static"] }
+salvo = { version = "0.60", default-features = true, optional = true, features = ["serve-static"] }
 tokio = { version = "1", optional = true }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", optional = true }
