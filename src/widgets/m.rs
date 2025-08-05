@@ -3,10 +3,10 @@ use std::ops::{Deref, DerefMut};
 
 use glory_core::web::Element;
 
+use glory_core::IntoFiller;
 use glory_core::reflow::{Bond, Lotus};
 use glory_core::web::events::EventDescriptor;
 use glory_core::web::{AttrValue, ClassPart, PropValue};
-use glory_core::IntoFiller;
 use glory_core::{NodeRef, Scope, Widget};
 
 define_widget!(
