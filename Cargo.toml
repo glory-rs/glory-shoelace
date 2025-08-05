@@ -1,9 +1,9 @@
 [package]
 name = "glory-shoelace"
 version = "0.0.3"
-authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
-edition = "2021"
-rust-version = "1.73"
+authors = ["Chrislearn Young <chris@acroidea.com>"]
+edition = "2024"
+rust-version = "1.88"
 description = """
 Shoelance for Glory.
 """
